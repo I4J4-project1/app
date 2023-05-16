@@ -6,4 +6,4 @@ app = Flask(__name__) # flask application 생성
 
 @app.route('/')
 def index():
-    return 'Hello world'
+    return 'Hello world'*2
