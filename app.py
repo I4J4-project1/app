@@ -7,7 +7,7 @@ from flask import request
 app = Flask(__name__) # flask application 생성
 
 @app.route('/')
-def index():
+def main():
     return render_template('main.html')
 
 # info page
