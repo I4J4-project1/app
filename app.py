@@ -20,8 +20,14 @@ if __name__ == '__main__':
 
 @app.route('/result', methods=['GET','POST'])
 def result():
+    go_date = request.args.get('goDate')
+    back_date = request.args.get('backDate')
     if request.method == 'GET':
-        return render_template('main_result.html')
+        return render_template('main_result.html', go_date=go_date, back_date=back_date)
     
     if request.method == 'POST':
         return 
+    
+@app.route('/dash', methods=['GET','POST'])
+def dash():
+    return render_template('dash.html')
