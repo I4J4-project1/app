@@ -12,8 +12,6 @@
      <!--항공,숙박,렌트 각각 페이지로-->
     <link rel="canonical" href="https://getbootstrap.kr/docs/5.2/examples/features/">
 
-
-
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
@@ -139,14 +137,16 @@
             </ul>
             <!--버튼으로 변경시 아래 주석 제거-->
             <!--<button type="button" class="w-100 btn btn-lg btn-outline-secondary">more</button>-->
-            <div class="select">
-              <select class="form-select" aria-label="Default select example">
-                <option selected>최저가 상품 추천</option>
-                <option value="1">항공권</option>
-                <option value="2">숙박</option>
-                <option value="3">렌트카</option>
-              </select>
-            </div>
+            <form method="POST" action="/result">
+              <div class="select">
+                  <select class="form-select" aria-label="Default select example" name="lowprice_option" onchange="this.form.submit()" required>
+                    <option selected>최저가 상품 추천</option>
+                    <option value="항공">항공권</option>
+                    <option value="숙박">숙박</option>
+                    <option value="렌트">렌트카</option>
+                  </select>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -162,14 +162,16 @@
               <li>숙박 {hotel}원</li>
               <li>렌트 {rentcar}원</li>
             </ul>
-            <div class="select">
-              <select class="form-select" aria-label="Default select example">
-                <option selected>평균가 상품 추천</option>
-                <option value="1">항공권</option>
-                <option value="2">숙박</option>
-                <option value="3">렌트카</option>
-              </select>
-            </div>
+            <form method="POST" action="/result">
+              <div class="select">
+                <select class="form-select" aria-label="Default select example"  name="midprice_option" onchange="this.form.submit()" required>
+                  <option selected>평균가 상품 추천</option>
+                  <option value="항공">항공권</option>
+                  <option value="숙박">숙박</option>
+                  <option value="렌트">렌트카</option>
+                </select>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -185,14 +187,16 @@
               <li>숙박 {hotel}원</li>
               <li>렌트 {rentcar}원</li>
             </ul>
-            <div class="select">
-              <select class="form-select" aria-label="Default select example">
-                <option selected>최고가 상품 추천</option>
-                <option value="1">항공권</option>
-                <option value="2">숙박</option>
-                <option value="3">렌트카</option>
-              </select>
-            </div>
+            <form method="POST" action="/result">
+              <div class="select">
+                <select class="form-select" aria-label="Default select example"  name="highprice_option" onchange="this.form.submit()" required>
+                  <option selected>최고가 상품 추천</option>
+                  <option value="항공">항공권</option>
+                  <option value="숙박">숙박</option>
+                  <option value="렌트">렌트카</option>
+                </select>
+              </div>
+            </form>
           </div>
         </div>
       </div>
