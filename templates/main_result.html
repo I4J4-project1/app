@@ -78,6 +78,11 @@
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
       }
+
+      select {    
+        text-align: center;
+        text-align-last: center;
+      }
     </style>
 
     
@@ -120,7 +125,7 @@
   <!--메인 화면 구성-->
   <main>
     <div class="row row-cols-1 row-cols-md-3 text-center">
-      <div class="col-lg-3 col-md-6">
+      <div class="col-lg-4">
         <div class="card mb-4 rounded-3 shadow-sm">
           <div class="card-header py-3">
             <h4 class="my-0 fw-normal">최저가</h4>
@@ -132,55 +137,62 @@
                 <li>숙박 {hotel}원</li>
                 <li>렌트 {rentcar}원</li>
             </ul>
-            <button type="button" class="w-100 btn btn-lg btn-outline-secondary">more</button>
+            <!--버튼으로 변경시 아래 주석 제거-->
+            <!--<button type="button" class="w-100 btn btn-lg btn-outline-secondary">more</button>-->
+            <div class="select">
+              <select class="form-select" aria-label="Default select example">
+                <option selected>최저가 상품 추천</option>
+                <option value="1">항공권</option>
+                <option value="2">숙박</option>
+                <option value="3">렌트카</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-lg-3 col-md-6">
+      <div class="col-lg-4">
         <div class="card mb-4 rounded-3 shadow-sm">
           <div class="card-header py-3">
-            <h4 class="my-0 fw-normal">25%</h4>
+            <h4 class="my-0 fw-normal">평균/중간</h4>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title">$15<small class="text-muted fw-light">/mo</small></h1>
+            <h1 class="card-title pricing-card-title">{{price}}원</h1>
             <ul class="list-unstyled mt-3 mb-4">
-                <li>항공</li>
-                <li>숙박</li>
-                <li>렌트</li>
+              <li>항공 {flight}원</li>
+              <li>숙박 {hotel}원</li>
+              <li>렌트 {rentcar}원</li>
             </ul>
-            <button type="button" class="w-100 btn btn-lg btn-outline-secondary">more</button>
+            <div class="select">
+              <select class="form-select" aria-label="Default select example">
+                <option selected>평균가 상품 추천</option>
+                <option value="1">항공권</option>
+                <option value="2">숙박</option>
+                <option value="3">렌트카</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-lg-3 col-md-6">
-        <div class="card mb-4 rounded-3 shadow-sm">
-          <div class="card-header py-3">
-            <h4 class="my-0 fw-normal">75%</h4>
-          </div>
-          <div class="card-body">
-            <h1 class="card-title pricing-card-title">$15<small class="text-muted fw-light">/mo</small></h1>
-            <ul class="list-unstyled mt-3 mb-4">
-                <li>항공</li>
-                <li>숙박</li>
-                <li>렌트</li>
-            </ul>
-            <button type="button" class="w-100 btn btn-lg btn-outline-secondary">more</button>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6">
+      <div class="col-lg-4">
         <div class="card mb-4 rounded-3 shadow-sm">
           <div class="card-header py-3">
             <h4 class="my-0 fw-normal">최고가</h4>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title">$15<small class="text-muted fw-light">/mo</small></h1>
+            <h1 class="card-title pricing-card-title">{{price}}원</h1>
             <ul class="list-unstyled mt-3 mb-4">
-              <li>항공</li>
-              <li>숙박</li>
-              <li>렌트</li>
+              <li>항공 {flight}원</li>
+              <li>숙박 {hotel}원</li>
+              <li>렌트 {rentcar}원</li>
             </ul>
-            <button type="button" class="w-100 btn btn-lg btn-outline-secondary">more</button>
+            <div class="select">
+              <select class="form-select" aria-label="Default select example">
+                <option selected>최고가 상품 추천</option>
+                <option value="1">항공권</option>
+                <option value="2">숙박</option>
+                <option value="3">렌트카</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
@@ -228,7 +240,7 @@
 
   </main>
 
-  <footer class="pt-4 my-md-5 pt-md-5 border-top">
+  <footer class="pt-3 mt-4 text-muted border-top">
     <div class="row">
       <div class="col-12 col-md">
         <small class="d-block mb-3 text-muted">&copy; I4J4 2023</small>
