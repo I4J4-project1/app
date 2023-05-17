@@ -3,8 +3,12 @@
 <head>
     <title>Tableau Dashboard</title>
     <script type='text/javascript' src='https://public.tableau.com/javascripts/api/viz_v1.js'></script>
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
 </head>
 <body>
+    <div class="container py-3">
     <header>
         <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
             <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
@@ -50,5 +54,6 @@
         vizElement.style.width='100%';
         vizElement.style.height=(divElement.offsetWidth*0.75)+'px';
     </script>
+</div>
 </body>
 </html>
