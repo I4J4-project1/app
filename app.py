@@ -4,8 +4,19 @@ from flask import Flask
 from flask import render_template
 from flask import request
 from flask import redirect
+import psycopg2
 
 app = Flask(__name__) # flask application 생성
+
+def connect_to_database():
+    conn = psycopg2.connect(
+        host="drona.db.elephantsql.com",
+        port="5432",
+        database="bnwptvqk",
+        user="bnwptvqk",
+        password="RWLldWbYTfneg_E7-NYZ0YeUH75vKq1d"
+    )
+    return conn
 
 # main page
 @app.route('/')
@@ -17,32 +28,81 @@ def main():
 def info():
     return render_template('info.html')
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
 
 # result page
 @app.route('/result', methods=['GET','POST'])
 def result():
-    go_date = request.args.get('goDate')
-    back_date = request.args.get('backDate')
-    if request.method == 'GET':
-        return render_template('main_result.html', go_date=go_date, back_date=back_date)
-    
-    # 각각의 select값을 받아왔을때
-    if request.method == 'POST':
-        low_option = request.form.get('lowprice_option')
-        mid_option = request.form.get('midprice_option')
-        high_option = request.form.get('highprice_option')
-        
-        if low_option =='항공' or mid_option=='항공' or high_option=='항공':
-            return redirect('/flight')
-        elif low_option =='숙박' or mid_option=='숙박' or high_option=='숙박':
-            return redirect('/hotel')
-        elif low_option =='렌트' or mid_option=='렌트' or high_option=='렌트':
-            return redirect('/rentcar')
-        else:       # 아무것도 선택하지 않았을 경우
-            return render_template('main_result.html')
 
+    input_value_1 = request.args.get('goDate')
+    input_value_2 = request.args.get('backDate')
+
+
+
+    conn = connect_to_database()
+    cur = conn.cursor()
+
+    # flight_gimpo_jeju 테이블에서 날짜가 goDate인 행들의 최저가 가져오기
+    cur.execute("""
+        SELECT MIN(price)
+        FROM flight_gimpo_jeju
+        WHERE date = %s
+    """, (input_value_1,))
+    min_price_1 = cur.fetchone()[0]
+
+    # flight_jeju_gimpo 테이블에서 날짜가 backDate인 행들의 최저가 가져오기
+    cur.execute("""
+        SELECT MIN(price)
+        FROM flight_jeju_gimpo
+        WHERE date = %s
+    """, (input_value_2,))
+    min_price_2 = cur.fetchone()[0]
+
+    # flight_gimpo_jeju 테이블에서 날짜가 goDate인 행들의 평균가 가져오기
+    cur.execute("""
+        SELECT AVG(price)
+        FROM flight_gimpo_jeju
+        WHERE date = %s
+    """, (input_value_1,))
+    avg_price_1 = cur.fetchone()[0]
+
+    # flight_jeju_gimpo 테이블에서 날짜가 backDate인 행들의 평균가 가져오기
+    cur.execute("""
+        SELECT AVG(price)
+        FROM flight_jeju_gimpo
+        WHERE date = %s
+    """, (input_value_2,))
+    avg_price_2 = cur.fetchone()[0]
+
+    # flight_gimpo_jeju 테이블에서 날짜가 goDate인 행들의 최고가 가져오기
+    cur.execute("""
+        SELECT MAX(price)
+        FROM flight_gimpo_jeju
+        WHERE date = %s
+    """, (input_value_1,))
+    max_price_1 = cur.fetchone()[0]
+
+    # flight_jeju_gimpo 테이블에서 날짜가 backDate인 행들의 최고가 가져오기
+    cur.execute("""
+        SELECT MAX(price)
+        FROM flight_jeju_gimpo
+        WHERE date = %s
+    """, (input_value_2,))
+    max_price_2 = cur.fetchone()[0]
+
+    # 최저가 더한 값
+    total_min_price = min_price_1 + min_price_2
+
+    # 평균가 더한 값
+    total_avg_price = avg_price_1 + avg_price_2
+
+    # 최고가 더한 값
+    total_max_price = max_price_1 + max_price_2
+
+    # 연산 결과를 result.html로 전달
+    return render_template('main_result.html', total_min_price=total_min_price,
+                           total_avg_price=total_avg_price, total_max_price=total_max_price)
+    
 # dashboard page    
 @app.route('/dash', methods=['GET','POST'])
 def dash():
@@ -62,3 +122,6 @@ def hotel():
 @app.route('/rentcar')
 def rentcar():
     return render_template('rentcar.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
