@@ -152,28 +152,101 @@
     <script>
         // Pikaday 라이브러리를 사용하여 달력 생성
         var goDatepicker = new Pikaday({
+            // 달력 한국어 설정
+            i18n: {
+            previousMonth : '이전달',
+            nextMonth     : '다음달',
+            months        : ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+            weekdays      : ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+            weekdaysShort : ['일','월','화','수','목','금','토']
+            },
+
             field: document.getElementById('goDate'),
-            format: 'yyyy-MM-dd',
+            minDate: new Date(2023, 04, 18), // 오늘날짜부터
+            maxDate: new Date(2023, 07, 31), // 8월 31일까지 달력 노출 
+            format: 'yyyy.MM.dd',
+            // 날짜 형식 변경
+            toString(date, format) {
+                // you should do formatting based on the passed format,
+                // but we will just return 'D/M/YYYY' for simplicity
+                const day = date.getDate();
+                const month = date.getMonth() + 1; // 1월이 0부터 시작하여 1을 더해준다.
+                const year = date.getFullYear();
+                return `${year}.${month < 10 ? '0' + month : month}.${day < 10 ? '0' + day : day}`;
+                //return `${year}.${month}.${day}`;
+            },
+            parse(dateString, format) {
+                // dateString is the result of `toString` method
+                const parts = dateString.split('/');
+                const day = parseInt(parts[0], 10);
+                const month = parseInt(parts[1], 10);
+                const year = parseInt(parts[2], 10);
+                return new Date(year, month -1, day);
+            },
+            // parse(dateString, format) {
+            //     const month = parseInt(dateString.substring(0, 2), 10);
+            //     const day = parseInt(dateString.substring(2, 4), 10);
+            //     const year = new Date().getFullYear();
+            //     return new Date(year, month - 1, day);
+            // },
             onSelect: function() {
-                selectDate(goDatepicker.toString());
+                selectDate(goDatepicker.toString(date));
             }
         });
 
         var backDatepicker = new Pikaday({
+            // 달력 한국어 설정
+            i18n: {
+            previousMonth : '이전달',
+            nextMonth     : '다음달',
+            months        : ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+            weekdays      : ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+            weekdaysShort : ['일','월','화','수','목','금','토']
+            },
+
             field: document.getElementById('backDate'),
-            format: 'yyyy-MM-dd',
+            minDate: new Date(2023, 04, 18), // 오늘날짜부터
+            maxDate: new Date(2023, 07, 31), // 8월 31일까지 달력 노출 
+            format: 'yyyy.MM.dd',
+            // 날짜 형식 변경
+            toString(date, format) {
+                // you should do formatting based on the passed format,
+                // but we will just return 'D/M/YYYY' for simplicity
+                const day = date.getDate();
+                const month = date.getMonth()+1;
+                const year = date.getFullYear();
+                return `${year}.${month < 10 ? '0' + month : month}.${day < 10 ? '0' + day : day}`;
+            },
+            parse(dateString, format) {
+                // dateString is the result of `toString` method
+                const parts = dateString.split('/');
+                const day = parseInt(parts[0], 10);
+                const month = parseInt(parts[1], 10);
+                const year = parseInt(parts[2], 10);
+                return new Date(year, month-1, day);
+            },
             onSelect: function() {
-                selectDate(backDatepicker.toString());
+                selectDate(backDatepicker.toString(date));
             }
         });
 
+        // function submitForm() {
+        //     var goDate = document.getElementById('goDate').value;
+        //     var backDate = document.getElementById('backDate').value;
+        //     if (goDate && backDate) {
+        //         window.location.href = '/result?goDate=' + goDate + '&backDate=' + backDate;
+        //     }
+        // }
+        /*  주소창 출력
+            Date 받아오기 → substring(5) = 'yyyy.'부분제거*/
         function submitForm() {
-            var goDate = document.getElementById('goDate').value;
-            var backDate = document.getElementById('backDate').value;
-            if (goDate && backDate) {
-                window.location.href = '/result?goDate=' + goDate + '&backDate=' + backDate;
-            }
+        var goDate = goDatepicker.toString(goDatepicker.getDate()).substring(5).replace('.', ''); // 'MMDD' 형식으로 변환
+        var backDate = backDatepicker.toString(backDatepicker.getDate()).substring(5).replace('.', ''); // 'MMDD' 형식으로 변환
+        if (goDate && backDate) {
+            window.location.href = '/result?goDate=' + goDate + '&backDate=' + backDate;
         }
+    }
+
     </script>
 
 </body>
