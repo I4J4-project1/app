@@ -132,7 +132,7 @@
             <h1 class="card-title pricing-card-title"> 총 {{min_price}}원</h1>
             <ul class="list-unstyled mt-3 mb-4">
                 <li>항공 {{f_total_min_price}}원</li>
-                <li>숙박 {{h_min_price}}원</li>
+                <li>호텔 {{h_min_price}}원</li>
                 <li>렌트 {{c_min_price}}원</li>
             </ul>
             <!--버튼으로 변경시 아래 주석 제거-->
@@ -142,7 +142,7 @@
                   <select class="form-select" aria-label="Default select example" name="lowprice_option" onchange="this.form.submit()" required>
                     <option selected>최저가 상품 추천</option>
                     <option value="항공">항공권</option>
-                    <option value="숙박">숙박</option>
+                    <option value="숙박">호텔</option>
                     <option value="렌트">렌트카</option>
                   </select>
               </div>
@@ -159,7 +159,7 @@
             <h1 class="card-title pricing-card-title"> 총 {{avg_price}}원</h1>
             <ul class="list-unstyled mt-3 mb-4">
               <li>항공 {{f_total_avg_price}}원</li>
-              <li>숙박 {{h_avg_price}}원</li>
+              <li>호텔 {{h_avg_price}}원</li>
               <li>렌트 {{c_avg_price}}원</li>
             </ul>
             <form method="POST" action="/result">
@@ -167,7 +167,7 @@
                 <select class="form-select" aria-label="Default select example"  name="midprice_option" onchange="this.form.submit()" required>
                   <option selected>평균가 상품 추천</option>
                   <option value="항공">항공권</option>
-                  <option value="숙박">숙박</option>
+                  <option value="숙박">호텔</option>
                   <option value="렌트">렌트카</option>
                 </select>
               </div>
@@ -184,7 +184,7 @@
             <h1 class="card-title pricing-card-title"> 총 {{max_price}}원</h1>
             <ul class="list-unstyled mt-3 mb-4">
               <li>항공 {{f_total_max_price}}원</li>
-              <li>숙박 {{h_max_price}}원</li>
+              <li>호텔 {{h_max_price}}원</li>
               <li>렌트 {{c_max_price}}원</li>
             </ul>
             <form method="POST" action="/result">
@@ -192,7 +192,7 @@
                 <select class="form-select" aria-label="Default select example"  name="highprice_option" onchange="this.form.submit()" required>
                   <option selected>최고가 상품 추천</option>
                   <option value="항공">항공권</option>
-                  <option value="숙박">숙박</option>
+                  <option value="숙박">호텔</option>
                   <option value="렌트">렌트카</option>
                 </select>
               </div>
