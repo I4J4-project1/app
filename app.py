@@ -33,12 +33,23 @@ def info():
 @app.route('/result', methods=['GET','POST'])
 def result():
 
-    input_value_1 = int(request.args.get('goDate'))
-    input_value_2 = int(request.args.get('backDate'))
+    print(request.args.get('goDate'))
+    print(request.args.get('backDate'))
+    
+    input_value_1 = request.args.get('goDate')
+    input_value_2 = request.args.get('backDate')
     # input_value_3 = request.args.get('peopleValue')
-
+    
+    
+    
     if request.method == 'GET':
-
+        
+        if input_value_1 is None or input_value_2 is None:
+            return render_template('main.html')
+        
+        input_value_1 = int(input_value_1)
+        input_value_2 = int(input_value_2)
+        
         conn = connect_to_database()
         cur = conn.cursor()
 
