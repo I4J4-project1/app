@@ -197,7 +197,11 @@
             //     const year = new Date().getFullYear();
             //     return new Date(year, month - 1, day);
             // },
-            onSelect: function() {
+            onSelect: function(date) {
+                backDatepicker.setMinDate(date); // 오는날은 가는날 이후로만 선택 가능
+                var maxDate = new Date(date.getTime());
+                maxDate.setDate(maxDate.getDate() + 4); // 4박 5일까지만 선택 가능
+                backDatepicker.setMaxDate(maxDate);
                 selectDate(goDatepicker.toString(date));
             }
         });
