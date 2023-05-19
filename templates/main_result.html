@@ -129,11 +129,11 @@
             <h4 class="my-0 fw-normal">최저가</h4>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title">{{total_min_price}}원</h1>
+            <h1 class="card-title pricing-card-title"> 총 {{min_price}}원</h1>
             <ul class="list-unstyled mt-3 mb-4">
-                <li>항공 {flight}원</li>
-                <li>숙박 {hotel}원</li>
-                <li>렌트 {rentcar}원</li>
+                <li>항공 {{f_total_min_price}}원</li>
+                <li>숙박 {{h_min_price}}원</li>
+                <li>렌트 {{c_min_price}}원</li>
             </ul>
             <!--버튼으로 변경시 아래 주석 제거-->
             <!--<button type="button" class="w-100 btn btn-lg btn-outline-secondary">more</button>-->
@@ -156,11 +156,11 @@
             <h4 class="my-0 fw-normal">평균가</h4>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title">{{total_avg_price}}원</h1>
+            <h1 class="card-title pricing-card-title"> 총 {{avg_price}}원</h1>
             <ul class="list-unstyled mt-3 mb-4">
-              <li>항공 {flight}원</li>
-              <li>숙박 {hotel}원</li>
-              <li>렌트 {rentcar}원</li>
+              <li>항공 {{f_total_avg_price}}원</li>
+              <li>숙박 {{h_avg_price}}원</li>
+              <li>렌트 {{c_avg_price}}원</li>
             </ul>
             <form method="POST" action="/result">
               <div class="select">
@@ -181,11 +181,11 @@
             <h4 class="my-0 fw-normal">최고가</h4>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title">{{total_max_price}}원</h1>
+            <h1 class="card-title pricing-card-title"> 총 {{max_price}}원</h1>
             <ul class="list-unstyled mt-3 mb-4">
-              <li>항공 {flight}원</li>
-              <li>숙박 {hotel}원</li>
-              <li>렌트 {rentcar}원</li>
+              <li>항공 {{f_total_max_price}}원</li>
+              <li>숙박 {{h_max_price}}원</li>
+              <li>렌트 {{c_max_price}}원</li>
             </ul>
             <form method="POST" action="/result">
               <div class="select">
