@@ -35,6 +35,7 @@ def result():
 
     input_value_1 = request.args.get('goDate')
     input_value_2 = request.args.get('backDate')
+    # input_value_3 = request.args.get('peopleValue')
 
     if request.method == 'GET':
 
@@ -98,7 +99,7 @@ def result():
         # 최고가 더한 값
         total_max_price = max_price_1 + max_price_2
 
-    # 연산 결과를 result.html로 전달
+        # 연산 결과를 result.html로 전달
         return render_template('main_result.html', total_min_price=total_min_price,
                            total_avg_price=total_avg_price, total_max_price=total_max_price)
     
