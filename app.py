@@ -33,8 +33,8 @@ def info():
 @app.route('/result', methods=['GET','POST'])
 def result():
 
-    input_value_1 = request.args.get('goDate')
-    input_value_2 = request.args.get('backDate')
+    input_value_1 = int(request.args.get('goDate'))
+    input_value_2 = int(request.args.get('backDate'))
     # input_value_3 = request.args.get('peopleValue')
 
     if request.method == 'GET':
@@ -48,7 +48,7 @@ def result():
             FROM flight_gimpo_jeju
             WHERE date = %s
         """, (input_value_1,))
-        min_price_1 = cur.fetchone()[0]
+        f_min_price_1 = cur.fetchone()[0]
 
         # flight_jeju_gimpo 테이블에서 날짜가 backDate인 행들의 최저가 가져오기
         cur.execute("""
@@ -56,7 +56,7 @@ def result():
             FROM flight_jeju_gimpo
             WHERE date = %s
         """, (input_value_2,))
-        min_price_2 = cur.fetchone()[0]
+        f_min_price_2 = cur.fetchone()[0]
 
         # flight_gimpo_jeju 테이블에서 날짜가 goDate인 행들의 평균가 가져오기
         cur.execute("""
@@ -64,7 +64,7 @@ def result():
             FROM flight_gimpo_jeju
             WHERE date = %s
         """, (input_value_1,))
-        avg_price_1 = cur.fetchone()[0]
+        f_avg_price_1 = cur.fetchone()[0]
 
         # flight_jeju_gimpo 테이블에서 날짜가 backDate인 행들의 평균가 가져오기
         cur.execute("""
@@ -72,7 +72,7 @@ def result():
             FROM flight_jeju_gimpo
             WHERE date = %s
         """, (input_value_2,))
-        avg_price_2 = cur.fetchone()[0]
+        f_avg_price_2 = cur.fetchone()[0]
 
         # flight_gimpo_jeju 테이블에서 날짜가 goDate인 행들의 최고가 가져오기
         cur.execute("""
@@ -80,7 +80,7 @@ def result():
             FROM flight_gimpo_jeju
             WHERE date = %s
         """, (input_value_1,))
-        max_price_1 = cur.fetchone()[0]
+        f_max_price_1 = cur.fetchone()[0]
 
         # flight_jeju_gimpo 테이블에서 날짜가 backDate인 행들의 최고가 가져오기
         cur.execute("""
@@ -88,20 +88,90 @@ def result():
             FROM flight_jeju_gimpo
             WHERE date = %s
         """, (input_value_2,))
-        max_price_2 = cur.fetchone()[0]
+        f_max_price_2 = cur.fetchone()[0]
 
         # 최저가 더한 값
-        total_min_price = min_price_1 + min_price_2
+        f_total_min_price = f_min_price_1 + f_min_price_2
 
         # 평균가 더한 값
-        total_avg_price = avg_price_1 + avg_price_2
+        f_total_avg_price = f_avg_price_1 + f_avg_price_2
 
         # 최고가 더한 값
-        total_max_price = max_price_1 + max_price_2
+        f_total_max_price = f_max_price_1 + f_max_price_2
+        
+        #호텔 최저가
+        cur.execute("""
+            SELECT MIN(price)
+            FROM hotel_total
+            WHERE checkout_date - checkin_date = %s - %s
+        """, (input_value_2, input_value_1))
+        h_min_price = cur.fetchone()[0]
+        
+        #호텔 평균가
+        cur.execute("""
+            SELECT AVG(price)
+            FROM hotel_total
+            WHERE checkout_date - checkin_date = %s - %s
+        """, (input_value_2, input_value_1))
+        h_avg_price = cur.fetchone()[0]
+        
+        #호텔 최고가
+        cur.execute("""
+            SELECT MAX(price)
+            FROM hotel_total
+            WHERE checkout_date - checkin_date = %s - %s
+        """, (input_value_2, input_value_1))
+        h_max_price = cur.fetchone()[0]
+        
+        #렌터카 최저가
+        cur.execute("""
+            SELECT MIN(price)
+            FROM car_total
+            WHERE return_date - rent_date = %s - %s
+        """, (input_value_2, input_value_1))
+        c_min_price = cur.fetchone()[0]
+        
+        #렌터카 평균가
+        cur.execute("""
+            SELECT AVG(price)
+            FROM car_total
+            WHERE return_date - rent_date = %s - %s
+        """, (input_value_2, input_value_1))
+        c_avg_price = cur.fetchone()[0]
+        
+        #렌터카 최고가
+        cur.execute("""
+            SELECT MAX(price)
+            FROM car_total
+            WHERE return_date - rent_date = %s - %s
+            """, (input_value_2, input_value_1))
+        c_max_price = cur.fetchone()[0]
+        
+        #항공,호텔,렌터카의 최저가,평균가,최고가 합산
+        min_price= f_total_min_price+h_min_price+c_min_price
+        avg_price= f_total_avg_price+h_avg_price+c_avg_price
+        max_price= f_total_max_price+h_max_price+c_max_price
+        
+        f_total_min_price = format(int(f_total_min_price), ',')
+        f_total_avg_price = format(int(f_total_avg_price), ',')
+        f_total_max_price = format(int(f_total_max_price), ',')
+        h_min_price = format(int(h_min_price), ',')
+        h_avg_price = format(int(h_avg_price), ',')
+        h_max_price = format(int(h_max_price), ',')
+        c_min_price = format(int(c_min_price), ',')
+        c_avg_price = format(int(c_avg_price), ',')
+        c_max_price = format(int(c_max_price), ',')
+        min_price = format(int(min_price), ',')
+        avg_price = format(int(avg_price), ',')
+        max_price = format(int(max_price), ',')
 
-        # 연산 결과를 result.html로 전달
-        return render_template('main_result.html', total_min_price=total_min_price,
-                           total_avg_price=total_avg_price, total_max_price=total_max_price)
+
+    # 연산 결과를 result.html로 전달
+        return render_template('main_result.html', f_total_min_price=f_total_min_price,
+                           f_total_avg_price=f_total_avg_price, f_total_max_price=f_total_max_price,
+                           h_min_price=h_min_price,h_avg_price=h_avg_price,h_max_price=h_max_price,
+                           c_min_price=c_min_price,c_avg_price=c_avg_price,c_max_price=c_max_price,
+                           min_price=min_price,avg_price=avg_price,max_price=max_price)
     
 
     if request.method == 'POST':

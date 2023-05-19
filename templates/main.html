@@ -172,6 +172,7 @@
             maxDate: new Date(2023, 05, 30), // 6월 30일까지 달력 노출 
             setDefaultDate: false, // 초기 날짜 노출:true, 노출X:false
             defaultDate: new Date(2023, 05, 01), // 기본 선택 날짜 설정
+            
             format: 'yyyy.MM.dd',
             // 날짜 형식 변경
             toString(date, format) {
@@ -248,19 +249,30 @@
         // }
         /*  주소창 출력
             Date 받아오기 → substring(5) = 'yyyy.'부분제거*/
+        function dateToInt(date) {
+            const day = date.getDate();
+            const month = date.getMonth() + 1; // 1월이 0부터 시작하여 1을 더해준다.
+            return month * 100 + day;
+        }
+
+        /*  주소창 출력
+            정수형으로 데이터 변환*/
         function submitForm() {
-        // 날짜 받아오는 함수
-        var goDate = goDatepicker.toString(goDatepicker.getDate()).substring(5).replace('.', ''); // 'MMDD' 형식으로 변환
-        var backDate = backDatepicker.toString(backDatepicker.getDate()).substring(5).replace('.', ''); // 'MMDD' 형식으로 변환
-        // 인원수 받아오는 함수
+        var goDate = dateToInt(goDatepicker.getDate()); // 'MMDD' 형식으로 변환
+        var backDate = dateToInt(backDatepicker.getDate()); // 'MMDD' 형식으로 변환
+        
         var people = document.getElementById("people_count");
         var peopleIndex = document.getElementById("people_count").options.selectedIndex;
         var peopleValue = people.options[peopleIndex].value;
 
-        if (goDate && backDate && peopleIndex) {
-            window.location.href = '/result?goDate=' + goDate + '&backDate=' + backDate +'&count=' + peopleValue;
+        console.log(goDate);
+        console.log(backDate);
+        
+        if (goDate && backDate) {
+            window.location.href = '/result?goDate=' + goDate + '&backDate=' + backDate;
         }
-    }
+        
+        }
 
     </script>
 
