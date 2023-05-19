@@ -191,27 +191,31 @@ def result():
         c_max_price = cur.fetchone()[0]
         
         #항공,호텔,렌터카의 최저가,중간가,최고가 합산
-        min_price= f_total_min_price+h_min_price+c_min_price
-        med_price= f_total_med_price+h_med_price+c_med_price
-        max_price= f_total_max_price+h_max_price+c_max_price
+
         
-        f_total_min_price = format(int(f_total_min_price) * input_value_3, ',')
-        f_total_med_price = format(int(f_total_med_price) * input_value_3, ',')
-        f_total_max_price = format(int(f_total_max_price) * input_value_3, ',')
-        
+        f_total_min_price = f_total_min_price * input_value_3
+        f_total_med_price = f_total_med_price * input_value_3
+        f_total_max_price = f_total_max_price * input_value_3
+
+        f_total_min_price = format(int(f_total_min_price), ',')
+        f_total_med_price = format(int(f_total_med_price), ',')
+        f_total_max_price = format(int(f_total_max_price), ',')
+
         h_min_price = format(int(h_min_price), ',')
         h_med_price = format(int(h_med_price), ',')
         h_max_price = format(int(h_max_price), ',')
-        
+
         c_min_price = format(int(c_min_price), ',')
         c_med_price = format(int(c_med_price), ',')
         c_max_price = format(int(c_max_price), ',')
-        
 
-        
-        min_price = format(int(min_price), ',')
-        med_price = format(int(med_price), ',')
-        max_price = format(int(max_price), ',')
+        min_price = int(f_total_min_price.replace(',', '')) + int(h_min_price.replace(',', '')) + int(c_min_price.replace(',', ''))
+        med_price = int(f_total_med_price.replace(',', '')) + int(h_med_price.replace(',', '')) + int(c_med_price.replace(',', ''))
+        max_price = int(f_total_max_price.replace(',', '')) + int(h_max_price.replace(',', '')) + int(c_max_price.replace(',', ''))
+
+        min_price = format(min_price, ',')
+        med_price = format(med_price, ',')
+        max_price = format(max_price, ',')
 
 
     # 연산 결과를 result.html로 전달
