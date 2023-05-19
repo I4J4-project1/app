@@ -199,12 +199,17 @@
             //     return new Date(year, month - 1, day);
             // },
             onSelect: function(date) {
-                backDatepicker.setMinDate(date); // 오는날은 가는날 이후로만 선택 가능
+                var backMinDate = new Date(date.getTime());
+                backMinDate.setDate(backMinDate.getDate() + 2); // 가는 날짜로부터 2일 이후부터 선택 가능
+                backDatepicker.setMinDate(backMinDate);
+        
                 var maxDate = new Date(date.getTime());
-                maxDate.setDate(maxDate.getDate() + 4); // 4박 5일까지만 선택 가능
+                maxDate.setDate(maxDate.getDate() + 4); // 가는 날짜를 제외하고 최대 4일 이후까지 선택 가능
                 backDatepicker.setMaxDate(maxDate);
+        
                 selectDate(goDatepicker.toString(date));
             }
+        
         });
 
         var backDatepicker = new Pikaday({
@@ -240,8 +245,16 @@
                 const year = parseInt(parts[2], 10);
                 return new Date(year, month-1, day);
             },
-            onSelect: function() {
-                selectDate(backDatepicker.toString(date));
+            onSelect: function(date) {
+                var goDate = goDatepicker.getDate();
+                var diffDays = Math.ceil((date - goDate) / (1000 * 60 * 60 * 24)); // 가는 날짜와의 차이 계산
+        
+                if (diffDays >= 2 && diffDays <= 4) {
+                    selectDate(backDatepicker.toString(date));
+                } else {
+                    // 유효한 기간이 아닌 경우 선택을 취소하고 이전 날짜로 돌아감
+                    backDatepicker.setDate(goDate, true);
+                }
             }
         });
         // function submitForm() {
@@ -269,10 +282,11 @@
         var peopleIndex = document.getElementById("people_count").options.selectedIndex;
         var peopleValue = people.options[peopleIndex].value;
 
-
+        console.log(peopleValue)
         
         if (goDate && backDate) {
-            window.location.href = '/result?goDate=' + goDate + '&backDate=' + backDate;
+            
+            window.location.href = `/result?goDate=${goDate}&backDate=${backDate}&peopleValue=${peopleValue}`
         }
         
         }

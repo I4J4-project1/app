@@ -15,14 +15,14 @@
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
-    <!-- Favicons -->
+    <!-- Favicons
 <link rel="apple-touch-icon" href="/docs/5.2/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
 <link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
 <link rel="manifest" href="/docs/5.2/assets/img/favicons/manifest.json">
 <link rel="mask-icon" href="/docs/5.2/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
 <link rel="icon" href="/docs/5.2/assets/img/favicons/favicon.ico">
-<meta name="theme-color" content="#712cf9">
+<meta name="theme-color" content="#712cf9"> -->
 
 
     <style>
@@ -81,12 +81,18 @@
         text-align: center;
         text-align-last: center;
       }
+
+      .people-value {
+        font-size: 14px;
+        color: #999;
+    }
     </style>
 
     
-    <!-- Custom styles for this template -->
-    <link href="pricing.css" rel="stylesheet">
-    <link href="features.css" rel="stylesheet">
+    <!-- Custom styles for this template
+      <link href="pricing.css" rel="stylesheet">
+      <link href="features.css" rel="stylesheet"> -->
+
   </head>
   <body>
     
@@ -131,7 +137,7 @@
           <div class="card-body">
             <h1 class="card-title pricing-card-title"> 총 {{min_price}}원</h1>
             <ul class="list-unstyled mt-3 mb-4">
-                <li>항공 {{f_total_min_price}}원</li>
+                <li>항공 {{f_total_min_price}}원 <span class="people-value">{{input_value_3}}명 기준</li>
                 <li>호텔 {{h_min_price}}원</li>
                 <li>렌트 {{c_min_price}}원</li>
             </ul>
@@ -156,15 +162,15 @@
             <h4 class="my-0 fw-normal">평균가</h4>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title"> 총 {{avg_price}}원</h1>
+            <h1 class="card-title pricing-card-title"> 총 {{med_price}}원</h1>
             <ul class="list-unstyled mt-3 mb-4">
-              <li>항공 {{f_total_avg_price}}원</li>
-              <li>호텔 {{h_avg_price}}원</li>
-              <li>렌트 {{c_avg_price}}원</li>
+              <li>항공 {{f_total_med_price}}원 <span class="people-value">{{input_value_3}}명 기준</li>
+              <li>호텔 {{h_med_price}}원</li>
+              <li>렌트 {{c_med_price}}원</li>
             </ul>
             <form method="POST" action="/result">
               <div class="select">
-                <select class="form-select" aria-label="Default select example"  name="midprice_option" onchange="this.form.submit()" required>
+                <select class="form-select" aria-label="Default select example"  name="medprice_option" onchange="this.form.submit()" required>
                   <option selected>평균가 상품 추천</option>
                   <option value="항공">항공권</option>
                   <option value="숙박">호텔</option>
@@ -183,7 +189,7 @@
           <div class="card-body">
             <h1 class="card-title pricing-card-title"> 총 {{max_price}}원</h1>
             <ul class="list-unstyled mt-3 mb-4">
-              <li>항공 {{f_total_max_price}}원</li>
+              <li>항공 {{f_total_max_price}}원<span class="people-value">{{input_value_3}}명 기준</li>
               <li>호텔 {{h_max_price}}원</li>
               <li>렌트 {{c_max_price}}원</li>
             </ul>

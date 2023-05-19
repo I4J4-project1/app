@@ -33,14 +33,9 @@ def info():
 @app.route('/result', methods=['GET','POST'])
 def result():
 
-    print(request.args.get('goDate'))
-    print(request.args.get('backDate'))
-    
     input_value_1 = request.args.get('goDate')
     input_value_2 = request.args.get('backDate')
-    # input_value_3 = request.args.get('peopleValue')
-    
-    
+    input_value_3 = request.args.get('peopleValue')
     
     if request.method == 'GET':
         
@@ -49,6 +44,9 @@ def result():
         
         input_value_1 = int(input_value_1)
         input_value_2 = int(input_value_2)
+        
+        if input_value_3 is not None:
+            input_value_3 = int(input_value_3)
         
         conn = connect_to_database()
         cur = conn.cursor()
@@ -69,21 +67,25 @@ def result():
         """, (input_value_2,))
         f_min_price_2 = cur.fetchone()[0]
 
-        # flight_gimpo_jeju 테이블에서 날짜가 goDate인 행들의 평균가 가져오기
+        # flight_gimpo_jeju 테이블에서 날짜가 goDate인 행들의 중간가 가져오기
         cur.execute("""
-            SELECT AVG(price)
+            SELECT price
             FROM flight_gimpo_jeju
             WHERE date = %s
+            ORDER BY price
         """, (input_value_1,))
-        f_avg_price_1 = cur.fetchone()[0]
+        f_prices = cur.fetchall()
+        f_med_price_1 = f_prices[len(f_prices)//2][0]
 
-        # flight_jeju_gimpo 테이블에서 날짜가 backDate인 행들의 평균가 가져오기
+        # flight_jeju_gimpo 테이블에서 날짜가 backDate인 행들의 중간가 가져오기
         cur.execute("""
-            SELECT AVG(price)
+            SELECT price
             FROM flight_jeju_gimpo
             WHERE date = %s
-        """, (input_value_2,))
-        f_avg_price_2 = cur.fetchone()[0]
+            ORDER BY price
+        """, (input_value_1,))
+        f_prices = cur.fetchall()
+        f_med_price_2 = f_prices[len(f_prices)//2][0]
 
         # flight_gimpo_jeju 테이블에서 날짜가 goDate인 행들의 최고가 가져오기
         cur.execute("""
@@ -104,90 +106,125 @@ def result():
         # 최저가 더한 값
         f_total_min_price = f_min_price_1 + f_min_price_2
 
-        # 평균가 더한 값
-        f_total_avg_price = f_avg_price_1 + f_avg_price_2
+        # 중간가 더한 값
+        f_total_med_price = f_med_price_1 + f_med_price_2
 
         # 최고가 더한 값
         f_total_max_price = f_max_price_1 + f_max_price_2
         
         #호텔 최저가
-        cur.execute("""
-            SELECT MIN(price)
-            FROM hotel_total
-            WHERE checkout_date - checkin_date = %s - %s
-        """, (input_value_2, input_value_1))
+        if input_value_3 <= 2:
+            cur.execute("""
+                SELECT MIN(price)
+                FROM hotel_total
+                WHERE customer_num = 2 AND checkout_date - checkin_date = %s - %s
+            """, (input_value_2, input_value_1))
+        else:
+            cur.execute("""
+                SELECT MIN(price)
+                FROM hotel_total
+                WHERE customer_num = 4 AND checkout_date - checkin_date = %s - %s
+            """, (input_value_2, input_value_1))
         h_min_price = cur.fetchone()[0]
         
-        #호텔 평균가
-        cur.execute("""
-            SELECT AVG(price)
-            FROM hotel_total
-            WHERE checkout_date - checkin_date = %s - %s
-        """, (input_value_2, input_value_1))
-        h_avg_price = cur.fetchone()[0]
+        #호텔 중간가
+        if input_value_3 <= 2:
+            cur.execute("""
+                SELECT price
+                FROM hotel_total
+                WHERE customer_num = 2 AND checkout_date - checkin_date = %s - %s
+                ORDER BY price
+            """, (input_value_2, input_value_1))
+        else:
+            cur.execute("""
+                SELECT price
+                FROM hotel_total
+                WHERE customer_num = 4 AND checkout_date - checkin_date = %s - %s
+                ORDER BY price
+            """, (input_value_2, input_value_1))
+        h_prices = cur.fetchall()
+        h_med_price = h_prices[len(h_prices)//2][0]
         
-        #호텔 최고가
-        cur.execute("""
-            SELECT MAX(price)
-            FROM hotel_total
-            WHERE checkout_date - checkin_date = %s - %s
-        """, (input_value_2, input_value_1))
+        if input_value_3 <= 2:
+            cur.execute("""
+                SELECT MAX(price)
+                FROM hotel_total
+                WHERE customer_num = 2 AND checkout_date - checkin_date = %s - %s
+            """, (input_value_2, input_value_1))
+        else:
+            cur.execute("""
+                SELECT MAX(price)
+                FROM hotel_total
+                WHERE customer_num = 4 AND checkout_date - checkin_date = %s - %s
+            """, (input_value_2, input_value_1))
         h_max_price = cur.fetchone()[0]
         
         #렌터카 최저가
         cur.execute("""
             SELECT MIN(price)
             FROM car_total
-            WHERE return_date - rent_date = %s - %s
-        """, (input_value_2, input_value_1))
+            WHERE num_seat <= %s AND return_date - rent_date = %s - %s
+        """, (5 if input_value_3 <= 3 else 7, input_value_2, input_value_1))
+
         c_min_price = cur.fetchone()[0]
+            
+            
         
-        #렌터카 평균가
+        #렌터카 중간가
         cur.execute("""
-            SELECT AVG(price)
+            SELECT price
             FROM car_total
-            WHERE return_date - rent_date = %s - %s
-        """, (input_value_2, input_value_1))
-        c_avg_price = cur.fetchone()[0]
+            WHERE num_seat <= %s AND return_date - rent_date = %s - %s
+            ORDER BY price
+        """, (5 if input_value_3 <= 3 else 7, input_value_2, input_value_1))
+
+        c_prices = cur.fetchall()
+        c_med_price = c_prices[len(c_prices)//2][0]
         
         #렌터카 최고가
         cur.execute("""
             SELECT MAX(price)
             FROM car_total
-            WHERE return_date - rent_date = %s - %s
-            """, (input_value_2, input_value_1))
+            WHERE num_seat <= %s AND return_date - rent_date = %s - %s
+        """, (5 if input_value_3 <= 3 else 7, input_value_2, input_value_1))
+
         c_max_price = cur.fetchone()[0]
         
-        #항공,호텔,렌터카의 최저가,평균가,최고가 합산
+        #항공,호텔,렌터카의 최저가,중간가,최고가 합산
         min_price= f_total_min_price+h_min_price+c_min_price
-        avg_price= f_total_avg_price+h_avg_price+c_avg_price
+        med_price= f_total_med_price+h_med_price+c_med_price
         max_price= f_total_max_price+h_max_price+c_max_price
         
-        f_total_min_price = format(int(f_total_min_price), ',')
-        f_total_avg_price = format(int(f_total_avg_price), ',')
-        f_total_max_price = format(int(f_total_max_price), ',')
+        f_total_min_price = format(int(f_total_min_price) * input_value_3, ',')
+        f_total_med_price = format(int(f_total_med_price) * input_value_3, ',')
+        f_total_max_price = format(int(f_total_max_price) * input_value_3, ',')
+        
         h_min_price = format(int(h_min_price), ',')
-        h_avg_price = format(int(h_avg_price), ',')
+        h_med_price = format(int(h_med_price), ',')
         h_max_price = format(int(h_max_price), ',')
+        
         c_min_price = format(int(c_min_price), ',')
-        c_avg_price = format(int(c_avg_price), ',')
+        c_med_price = format(int(c_med_price), ',')
         c_max_price = format(int(c_max_price), ',')
+        
+
+        
         min_price = format(int(min_price), ',')
-        avg_price = format(int(avg_price), ',')
+        med_price = format(int(med_price), ',')
         max_price = format(int(max_price), ',')
 
 
     # 연산 결과를 result.html로 전달
         return render_template('main_result.html', f_total_min_price=f_total_min_price,
-                           f_total_avg_price=f_total_avg_price, f_total_max_price=f_total_max_price,
-                           h_min_price=h_min_price,h_avg_price=h_avg_price,h_max_price=h_max_price,
-                           c_min_price=c_min_price,c_avg_price=c_avg_price,c_max_price=c_max_price,
-                           min_price=min_price,avg_price=avg_price,max_price=max_price)
+                           f_total_med_price=f_total_med_price, f_total_max_price=f_total_max_price,
+                           h_min_price=h_min_price,h_med_price=h_med_price,h_max_price=h_max_price,
+                           c_min_price=c_min_price,c_med_price=c_med_price,c_max_price=c_max_price,
+                           min_price=min_price,med_price=med_price,max_price=max_price,input_value_3=input_value_3)
     
 
     if request.method == 'POST':
         low_option = request.form.get('lowprice_option')
-        mid_option = request.form.get('midprice_option')
+        med_option = request.form.get('medprice_option')
         high_option = request.form.get('highprice_option')
 
         # 최저가
@@ -198,13 +235,13 @@ def result():
         elif low_option =='렌트':
             return redirect('/rentcar_min')
         
-        # 평균가
-        if mid_option =='항공':
-            return redirect('/flight_mid')
-        elif mid_option =='숙박':
-            return redirect('/hotel_mid')
-        elif mid_option =='렌트':
-            return redirect('/rentcar_mid')
+        # 중간가
+        if med_option =='항공':
+            return redirect('/flight_med')
+        elif med_option =='숙박':
+            return redirect('/hotel_med')
+        elif med_option =='렌트':
+            return redirect('/rentcar_med')
         
         # 최고가
         if high_option =='항공':
@@ -237,21 +274,21 @@ def hotel_min():
 def rentcar_min():
     return render_template('min_rentcar.html')
 
-######## 평균가 ########
+######## 중간가 ########
 # 항공편 추천
-@app.route('/flight_mid')
-def flight_mid():
-    return render_template('avg_flight.html')
+@app.route('/flight_med')
+def flight_med():
+    return render_template('med_flight.html')
 
 # 호텔 추천
-@app.route('/hotel_mid')
-def hotel_mid():
-    return render_template('avg_hotel.html')
+@app.route('/hotel_med')
+def hotel_med():
+    return render_template('med_hotel.html')
 
 # 렌트카 추천
-@app.route('/rentcar_mid')
-def rentcar_mid():
-    return render_template('avg_rentcar.html')
+@app.route('/rentcar_med')
+def rentcar_med():
+    return render_template('med_rentcar.html')
 
 ######## 최고가 ########
 # 항공편 추천
