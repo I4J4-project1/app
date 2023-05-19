@@ -168,8 +168,10 @@
             },
 
             field: document.getElementById('goDate'),
-            minDate: new Date(2023, 05, 01), // 6월부터
-            maxDate: new Date(2023, 07, 31), // 8월 31일까지 달력 노출 
+            minDate: new Date(2023, 05, 01), // 6월 1일부터
+            maxDate: new Date(2023, 05, 30), // 6월 30일까지 달력 노출 
+            setDefaultDate: false, // 초기 날짜 노출:true, 노출X:false
+            defaultDate: new Date(2023, 05, 01), // 기본 선택 날짜 설정
             format: 'yyyy.MM.dd',
             // 날짜 형식 변경
             toString(date, format) {
@@ -211,8 +213,10 @@
             },
 
             field: document.getElementById('backDate'),
-            minDate: new Date(2023, 05, 01), // 6월부터
-            maxDate: new Date(2023, 07, 31), // 8월 31일까지 달력 노출 
+            minDate: new Date(2023, 05, 01), // 6월 1일부터
+            maxDate: new Date(2023, 05, 30), // 6월 30일까지 달력 노출 
+            setDefaultDate: false, // 초기 날짜 노출:true, 노출X:false
+            defaultDate: new Date(2023, 05, 01), // 기본 선택 날짜 설정
             format: 'yyyy.MM.dd',
             // 날짜 형식 변경
             toString(date, format) {
