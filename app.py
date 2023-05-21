@@ -9,6 +9,7 @@ import psycopg2
 app = Flask(__name__) # flask application 생성
 f_min_reco_1, f_min_reco_2 = None, None
 f_max_reco_1, f_max_reco_2 = None, None
+f_med_reco_1, f_med_reco_2 = None, None
 
 def connect_to_database():
     conn = psycopg2.connect(
@@ -36,6 +37,7 @@ def info():
 def result():
     global f_min_reco_1, f_min_reco_2
     global f_max_reco_1, f_max_reco_2
+    global f_med_reco_1, f_med_reco_2
 
     input_value_1 = request.args.get('goDate')
     input_value_2 = request.args.get('backDate')
@@ -64,6 +66,7 @@ def result():
         """, (input_value_1,))
         f_min_reco_1 = [cur.fetchone() for _ in range(5)]
         f_min_price_1 = f_min_reco_1[0][-1]
+
         # flight_jeju_gimpo 테이블에서 날짜가 backDte인 행들의 최저가 가져오기
         cur.execute("""
             SELECT *
@@ -76,23 +79,32 @@ def result():
 
         # flight_gimpo_jeju 테이블에서 날짜가 goDate인 행들의 중간가 가져오기
         cur.execute("""
-            SELECT price
-            FROM flight_gimpo_jeju
-            WHERE date = %s
-            ORDER BY price
+            SELECT date,day,departure_time,arrival_time,airline,seat_class,price
+            FROM (
+                SELECT *, ROW_NUMBER() OVER (ORDER BY price) AS row_num, COUNT(*) OVER () AS total_count
+                FROM flight_gimpo_jeju
+                WHERE date = %s
+            ) subquery
+            WHERE row_num BETWEEN (total_count + 1) / 2 - 2 AND (total_count + 1) / 2 + 2
+            ORDER BY price;
         """, (input_value_1,))
-        f_prices = cur.fetchall()
-        f_med_price_1 = f_prices[len(f_prices)//2][0]
-
+        f_med_reco_1 = [cur.fetchone() for _ in range(5)]
+        f_med_price_1 = f_med_reco_1[0][-1]
+        print(f_med_price_1)
+        print(f_med_reco_1)
         # flight_jeju_gimpo 테이블에서 날짜가 backDate인 행들의 중간가 가져오기
         cur.execute("""
-            SELECT price
-            FROM flight_jeju_gimpo
-            WHERE date = %s
-            ORDER BY price
-        """, (input_value_1,))
-        f_prices = cur.fetchall()
-        f_med_price_2 = f_prices[len(f_prices)//2][0]
+            SELECT *
+            FROM (
+                SELECT *, ROW_NUMBER() OVER (ORDER BY price) AS row_num, COUNT(*) OVER () AS total_count
+                FROM flight_jeju_gimpo
+                WHERE date = %s
+            ) subquery
+            WHERE row_num BETWEEN (total_count + 1) / 2 - 2 AND (total_count + 1) / 2 + 2
+            ORDER BY price;
+        """, (input_value_2,))
+        f_med_reco_2 = [cur.fetchone() for _ in range(5)]
+        f_med_price_2 = f_med_reco_2[0][-1]
 
         # flight_gimpo_jeju 테이블에서 날짜가 goDate인 행들의 최고가 가져오기
         cur.execute("""
@@ -318,8 +330,12 @@ def rentcar_min():
 # 항공편 추천
 @app.route('/flight_med')
 def flight_med():
-    global f_total_med_price
-    return render_template('med_flight.html')
+    global f_med_reco_1, f_med_reco_2
+    f_med_dict_1 = f_make_dict(f_med_reco_1)
+    f_med_dict_2 = f_make_dict(f_med_reco_2)
+    show_num = min(len(f_med_dict_1[2]), len(f_med_dict_2[2]))
+    repeat = range(1, show_num)
+    return render_template('med_flight.html', f_med_dict_1=f_med_dict_1, f_med_dict_2=f_med_dict_2, show_num=show_num, repeat=repeat)
 
 # 호텔 추천
 @app.route('/hotel_med')
