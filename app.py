@@ -40,6 +40,8 @@ def result():
     global f_max_reco_1, f_max_reco_2
     global f_med_reco_1, f_med_reco_2
     global c_min_reco, c_med_reco, c_max_reco
+    global h_min_reco, h_med_reco, h_max_reco, h_med_price
+    global middle_row
 
     input_value_1 = request.args.get('goDate')
     input_value_2 = request.args.get('backDate')
@@ -136,51 +138,77 @@ def result():
         f_total_max_price = f_max_price_1 + f_max_price_2
         
         #호텔 최저가
-        if input_value_3 <= 2:
-            cur.execute("""
-                SELECT MIN(price)
-                FROM hotel_total
-                WHERE customer_num = 2 AND checkout_date - checkin_date = %s - %s
-            """, (input_value_2, input_value_1))
-        else:
-            cur.execute("""
-                SELECT MIN(price)
-                FROM hotel_total
-                WHERE customer_num = 4 AND checkout_date - checkin_date = %s - %s
-            """, (input_value_2, input_value_1))
-        h_min_price = cur.fetchone()[0]
         
-        #호텔 중간가
-        if input_value_3 <= 2:
-            cur.execute("""
-                SELECT price
-                FROM hotel_total
-                WHERE customer_num = 2 AND checkout_date - checkin_date = %s - %s
-                ORDER BY price
-            """, (input_value_2, input_value_1))
-        else:
-            cur.execute("""
-                SELECT price
-                FROM hotel_total
-                WHERE customer_num = 4 AND checkout_date - checkin_date = %s - %s
-                ORDER BY price
-            """, (input_value_2, input_value_1))
-        h_prices = cur.fetchall()
-        h_med_price = h_prices[len(h_prices)//2][0]
+        # feature 0 : checkin_date 1 : checkin_day 2 : checkout_date 3 : checkout_day
+        #         4 : hotel_name   5 : location    6 : grade         7 : score
+        #         8 : customer_num 9 : price      10 : stay_period
         
         if input_value_3 <= 2:
-            cur.execute("""
-                SELECT MAX(price)
-                FROM hotel_total
-                WHERE customer_num = 2 AND checkout_date - checkin_date = %s - %s
-            """, (input_value_2, input_value_1))
+            customer_num = 2
+        elif input_value_3 == 3:
+            customer_num = 3
+        elif input_value_3 == 4:
+            customer_num = 4
+
+        cur.execute("""
+            SELECT *
+            FROM hotel_total
+            WHERE customer_num = %s AND checkin_date = %s AND checkout_date = %s
+            ORDER BY price ASC
+        """, (customer_num, input_value_1, input_value_2))
+
+        h_min_reco = [cur.fetchone() for _ in range(5)]
+        h_min_price = h_min_reco[0][-2]
+        # 호텔 중간가
+
+        # feature 0: checkin_date 1: checkin_day 2: checkout_date 3: checkout_day
+        # 4: hotel_name 5: location 6: grade 7: score
+        # 8: customer_num 9: price 10: stay_period
+
+        cur.execute("""
+            SELECT *
+            FROM hotel_total
+            WHERE customer_num = %s AND checkin_date = %s AND checkout_date = %s
+            ORDER BY price
+        """, (customer_num, input_value_1, input_value_2))
+
+        results = cur.fetchall()  # 쿼리 결과에서 모든 행을 가져옵니다.
+        num_results = len(results)
+
+        if num_results >= 5:
+            # 중간 행의 인덱스를 계산합니다.
+            middle_index = num_results // 2
+            
+            # 중간 행을 가져옵니다.
+            middle_row = results[middle_index]
+
+            # 중간값을 저장합니다.
+            h_med_price = middle_row[9]  # 인덱스 9는 price에 해당합니다.
+
+            # 중간값을 제외한 나머지 4개의 행을 저장합니다.
+            other_rows = results[middle_index - 2 : middle_index] + results[middle_index + 1 : middle_index + 3]
+
+            # 나머지 4개의 행에서 모든 열을 추출하여 저장합니다.
+            h_med_reco = [row for row in other_rows]
         else:
-            cur.execute("""
-                SELECT MAX(price)
-                FROM hotel_total
-                WHERE customer_num = 4 AND checkout_date - checkin_date = %s - %s
-            """, (input_value_2, input_value_1))
-        h_max_price = cur.fetchone()[0]
+            # 결과 행의 개수가 5개 미만인 경우 처리합니다.
+            h_med_reco = [row for row in results]
+            h_med_price = None  # 중간값이 없으므로 None으로 설정합니다.
+        #호텔 최고가
+        
+        # feature 0 : checkin_date 1 : checkin_day 2 : checkout_date 3 : checkout_day
+        #         4 : hotel_name   5 : location    6 : grade         7 : score
+        #         8 : customer_num 9 : price      10 : stay_period
+        
+        cur.execute("""
+            SELECT *
+            FROM hotel_total
+            WHERE customer_num = %s AND checkin_date = %s AND checkout_date = %s
+            ORDER BY price DESC
+        """, (customer_num, input_value_1, input_value_2))
+
+        h_max_reco = [cur.fetchone() for _ in range(5)]
+        h_max_price = h_max_reco[0][-2]
         
         #렌터카 최저가
         # feature : rent_date,rent_day,return_date,return_day,car_name,oiltype,num_seat,price,reserve_avail, rent_period
@@ -289,8 +317,7 @@ def result():
 def dash():
     return render_template('dash.html')
 
-######## 최저가 ########
-# 항공편 추천
+
 
 # 항공편 데이터 dict로 만들기
 # dict의 key [0 - date, 1 - day, 2 - start_time, 3 - arrival_time, 4 - airline, 5 - seat, 6 - price]
@@ -336,7 +363,53 @@ def c_make_dict(data):
     dict_[9] = data[0][9]
     return dict_
 
+def h_make_dict(data):
+    dict_ = {}
+    for i in range(4, len(data[0])-1):
+        temp = []
+        for reco in data:
+            if reco == None:
+                break
+            temp.append(reco[i])
+        
+        dict_[i] = temp
+
+    # 날짜, 가격, 시간 포멧 설정
+    dict_[0] = ('0' + str(data[0][0])[0] + '.' + str(data[0][0])[1:])
+    dict_[2] = ('0' + str(data[0][2])[0] + '.' + str(data[0][2])[1:])
+    dict_[1] = data[0][1]
+    dict_[3] = data[0][3]
+
+    dict_[9] = [format(price, ',') for price in dict_[9]]
+    dict_[10] = data[0][10]
+    return dict_
+
+def h_med_make_dict(data):
+    dict_ = {}
+    for i in range(3, len(data[0])-1):
+        temp = []
+        for reco in data:
+            if reco == None:
+                break
+            temp.append(reco[i])
+        
+        dict_[i] = temp
+
+    # 날짜, 가격, 시간 포멧 설정
+    dict_[0] = ('0' + str(data[0][0])[0] + '.' + str(data[0][0])[1:])
+    dict_[2] = ('0' + str(data[0][2])[0] + '.' + str(data[0][2])[1:])
+    dict_[1] = data[0][1]
+    dict_[3] = data[0][3]
+
+    dict_[9] = [format(price, ',') for price in dict_[9]]
+    dict_[10] = data[0][10]
+    return dict_
+
+
+######## 최저가 ########
 @app.route('/flight_min')
+
+# 항공편 추천
 def flight_min():
     global f_min_reco_1, f_min_reco_2
     f_min_dict_1 = f_make_dict(f_min_reco_1)
@@ -348,7 +421,11 @@ def flight_min():
 # 호텔 추천
 @app.route('/hotel_min')
 def hotel_min():
-    return render_template('min_hotel.html')
+    global h_min_reco
+    h_min_dict = h_make_dict(h_min_reco)
+    show_num = len(h_min_dict[5]) - 1
+    repeat = range(1, show_num + 1)
+    return render_template('min_hotel.html', h_min_dict=h_min_dict, show_num=show_num, repeat=repeat)
 
 # 렌트카 추천
 @app.route('/rentcar_min')
@@ -373,8 +450,13 @@ def flight_med():
 # 호텔 추천
 @app.route('/hotel_med')
 def hotel_med():
-    global h_med_price
-    return render_template('med_hotel.html')
+    global h_med_reco, middle_row,h_med_price
+    h_med_dict = h_med_make_dict(h_med_reco)
+    show_num = len(h_med_dict[5])
+    repeat = range(0, show_num)
+    
+    
+    return render_template('med_hotel.html', h_med_dict=h_med_dict, show_num=show_num, repeat=repeat, middle_row=middle_row,h_med_price=h_med_price)
 
 # 렌트카 추천
 @app.route('/rentcar_med')
@@ -399,8 +481,11 @@ def flight_max():
 # 호텔 추천
 @app.route('/hotel_max')
 def hotel_max():
-    global h_max_price
-    return render_template('max_hotel.html')
+    global h_max_reco
+    h_max_dict = h_make_dict(h_max_reco)
+    show_num = len(h_max_dict[5]) - 1
+    repeat = range(1, show_num + 1)
+    return render_template('max_hotel.html', h_max_dict=h_max_dict, show_num=show_num, repeat=repeat)
 
 # 렌트카 추천
 @app.route('/rentcar_max')
