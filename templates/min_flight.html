@@ -102,61 +102,78 @@
             </nav>
         </div>
     </header>
+    <!-- 최저가 상품 -->
+    <section class="py-5 text-center container">
 
+      <br></br>
+      <h1 class="fw-light"><b>최저가 상품</b></h1>
+        
+    </section>
+    <!-- f_min_dict의 key [0 - date, 1 - day, 2 - start_time, 3 - arrival_time, 4 - airline, 5 - seat, 6 - price] -->
+
+    <div class="row align-items-md-stretch">
+      <div class="col-md-6 mb-3">
+        <h3 style="text-align: center;">김포 -> 제주 ({{f_min_dict_1[0]}} {{f_min_dict_1[1]}})</h3>
+        <div class="h-100 p-5 tbg-light border rounded-3">
+            <h2>{{f_min_dict_1[4][0]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{f_min_dict_1[6][0]}}원</h2>
+            <div>
+                <p>출발시간 {{f_min_dict_1[2][0]}}</p>
+                <p>도착시간 {{f_min_dict_1[3][0]}}</p>
+                <p>좌석 {{f_min_dict_1[5][0]}}</p>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <h3 style="text-align: center;">제주 -> 김포 ({{f_min_dict_2[0]}} {{f_min_dict_2[1]}})</h3>
+        <div class="h-100 p-5 tbg-light border rounded-3">
+            <h2>{{f_min_dict_2[4][0]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{f_min_dict_2[6][0]}}원</h2>
+            <div>
+                <p>출발시간 {{f_min_dict_2[2][0]}}</p>
+                <p>도착시간 {{f_min_dict_2[3][0]}}</p>
+                <p>좌석 {{f_min_dict_2[5][0]}}</p>
+            </div>
+      </div>
+      </div>
+    </div>
+    <br></br>
     <div class="p-4 mb-4 bg-light rounded-3 "> 
-        <div class="container-fluid">
-            <h2 class="display-6 fw-bold">항공권을 비교해보세요</h2>
-            <p class="fs-4 mb-2">선택하신 일정과 비용(최저가)에 맞는 항공권을 추천해드려요</p>
-        </div>
-    </div>
-
-    <!--row1-->
-    <div class="row align-items-md-stretch">
-      <div class="col-md-6 mb-3">
-        <div class="h-100 p-5 tbg-light border rounded-3">
-            <h2>{{항공사}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{가격}}</h2>
-            <div>
-                <p>출발시간</p>
-                <p>도착시간</p>
-                <p>좌석</p>
-            </div>
-        </div>
-      </div>
-      <div class="col-md-6 mb-3">
-        <div class="h-100 p-5 tbg-light border rounded-3">
-            <h2>{{항공사}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{가격}}</h2>
-            <div>
-                <p>출발시간</p>
-                <p>도착시간</p>
-                <p>좌석</p>
-            </div>
-      </div>
+      <div class="container-fluid">
+          <h4>최저가와 유사한 {{show_num}}개의 상품들을 살펴보세요</h4>
       </div>
     </div>
+    
+    <!--rows-->
+    {% for i in repeat %}
+        <div class="row align-items-md-stretch">
+            <div class="col-md-6 mb-3">
+              {% if loop.first %}
+                <h3 style="text-align: center;">김포 -> 제주 ({{ f_min_dict_1[0] }} {{ f_min_dict_1[1] }})</h3>
+              {% endif %}
+                <div class="h-100 p-5 tbg-light border rounded-3">
+                    <h2>{{ f_min_dict_1[4][i] }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ f_min_dict_1[6][i] }}원</h2>
+                    <div>
+                        <p>출발시간 {{ f_min_dict_1[2][i] }}</p>
+                        <p>도착시간 {{ f_min_dict_1[3][i] }}</p>
+                        <p>좌석 {{ f_min_dict_1[5][i] }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              {% if loop.first %}
+                <h3 style="text-align: center;">제주 -> 김포 ({{f_min_dict_2[0]}} {{f_min_dict_2[1]}})</h3>
+              {% endif %}
+                <div class="h-100 p-5 tbg-light border rounded-3">
+                  <h2>{{f_min_dict_2[4][i]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{f_min_dict_2[6][i]}}원</h2>
+                    <div>
+                      <p>출발시간 {{f_min_dict_2[2][i]}}</p>
+                      <p>도착시간 {{f_min_dict_2[3][i]}}</p>
+                      <p>좌석 {{f_min_dict_2[5][i]}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 
-    <!--row2-->
-    <div class="row align-items-md-stretch">
-        <div class="col-md-6 mb-3">
-            <div class="h-100 p-5 tbg-light border rounded-3">
-                <h2>{{항공사}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{가격}}</h2>
-                <div>
-                    <p>출발시간</p>
-                    <p>도착시간</p>
-                    <p>좌석</p>
-                </div>        
-            </div>
-        </div>
-        <div class="col-md-6 mb-3">
-            <div class="h-100 p-5 tbg-light border rounded-3">
-                <h2>{{항공사}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{가격}}</h2>
-                <div>
-                    <p>출발시간</p>
-                    <p>도착시간</p>
-                    <p>좌석</p>
-                </div>       
-            </div>
-        </div>
-        </div>
     
     <!--페이지 하단 부분-->
         <footer class="pt-3 mt-4 text-muted border-top">

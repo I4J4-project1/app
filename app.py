@@ -7,6 +7,8 @@ from flask import redirect
 import psycopg2
 
 app = Flask(__name__) # flask application 생성
+f_min_reco_1, f_min_reco_2 = None, None
+f_max_reco_1, f_max_reco_2 = None, None
 
 def connect_to_database():
     conn = psycopg2.connect(
@@ -32,6 +34,8 @@ def info():
 # result page
 @app.route('/result', methods=['GET','POST'])
 def result():
+    global f_min_reco_1, f_min_reco_2
+    global f_max_reco_1, f_max_reco_2
 
     input_value_1 = request.args.get('goDate')
     input_value_2 = request.args.get('backDate')
@@ -53,19 +57,22 @@ def result():
 
         # flight_gimpo_jeju 테이블에서 날짜가 goDate인 행들의 최저가 가져오기
         cur.execute("""
-            SELECT MIN(price)
+            SELECT *
             FROM flight_gimpo_jeju
             WHERE date = %s
+            ORDER BY price ASC
         """, (input_value_1,))
-        f_min_price_1 = cur.fetchone()[0]
-
-        # flight_jeju_gimpo 테이블에서 날짜가 backDate인 행들의 최저가 가져오기
+        f_min_reco_1 = [cur.fetchone() for _ in range(5)]
+        f_min_price_1 = f_min_reco_1[0][-1]
+        # flight_jeju_gimpo 테이블에서 날짜가 backDte인 행들의 최저가 가져오기
         cur.execute("""
-            SELECT MIN(price)
+            SELECT *
             FROM flight_jeju_gimpo
             WHERE date = %s
+            ORDER BY price ASC
         """, (input_value_2,))
-        f_min_price_2 = cur.fetchone()[0]
+        f_min_reco_2 = [cur.fetchone() for _ in range(5)]
+        f_min_price_2 = f_min_reco_2[0][-1]
 
         # flight_gimpo_jeju 테이블에서 날짜가 goDate인 행들의 중간가 가져오기
         cur.execute("""
@@ -89,19 +96,22 @@ def result():
 
         # flight_gimpo_jeju 테이블에서 날짜가 goDate인 행들의 최고가 가져오기
         cur.execute("""
-            SELECT MAX(price)
+            SELECT *
             FROM flight_gimpo_jeju
             WHERE date = %s
+            ORDER BY price DESC
         """, (input_value_1,))
-        f_max_price_1 = cur.fetchone()[0]
-
+        f_max_reco_1 = [cur.fetchone() for _ in range(5)]
+        f_max_price_1 = f_max_reco_1[0][-1]
         # flight_jeju_gimpo 테이블에서 날짜가 backDate인 행들의 최고가 가져오기
         cur.execute("""
-            SELECT MAX(price)
+            SELECT *
             FROM flight_jeju_gimpo
             WHERE date = %s
+            ORDER BY price DESC
         """, (input_value_2,))
-        f_max_price_2 = cur.fetchone()[0]
+        f_max_reco_2 = [cur.fetchone() for _ in range(5)]
+        f_max_price_2 = f_max_reco_2[0][-1]
 
         # 최저가 더한 값
         f_total_min_price = f_min_price_1 + f_min_price_2
@@ -264,9 +274,35 @@ def dash():
 
 ######## 최저가 ########
 # 항공편 추천
+
+# 항공편 데이터 dict로 만들기
+def f_make_dict(data):
+    dict_ = {}
+    for i in range(1, len(data[0])):
+        temp = []
+        for reco in data:
+            if reco == None:
+                break
+            temp.append(reco[i])
+        
+        dict_[i] = temp
+
+    # 날짜, 가격, 시간 포멧 설정
+    dict_[0] = ('0' + str(data[0][0])[0] + '.' + str(data[0][0])[1:])
+    dict_[1] = dict_[1][0]
+    dict_[2] = ['0' + str(time)[0] + '시 ' + str(time)[1:] + '분' if len(str(time)) == 3 else str(time)[:2] + '시 ' + str(time)[2:] + '분' for time in dict_[2]]
+    dict_[3] = ['0' + str(time)[0] + '시 ' + str(time)[1:] + '분' if len(str(time)) == 3 else str(time)[:2] + '시 ' + str(time)[2:] + '분' for time in dict_[3]]
+    dict_[6] = [format(price, ',') for price in dict_[6]]
+    return dict_
+
 @app.route('/flight_min')
 def flight_min():
-    return render_template('min_flight.html')
+    global f_min_reco_1, f_min_reco_2
+    f_min_dict_1 = f_make_dict(f_min_reco_1)
+    f_min_dict_2 = f_make_dict(f_min_reco_2)
+    show_num = min(len(f_min_dict_1[2]), len(f_min_dict_2[2]))
+    repeat = range(1, show_num)
+    return render_template('min_flight.html', f_min_dict_1=f_min_dict_1, f_min_dict_2=f_min_dict_2, show_num=show_num, repeat = repeat)
 
 # 호텔 추천
 @app.route('/hotel_min')
@@ -282,32 +318,42 @@ def rentcar_min():
 # 항공편 추천
 @app.route('/flight_med')
 def flight_med():
+    global f_total_med_price
     return render_template('med_flight.html')
 
 # 호텔 추천
 @app.route('/hotel_med')
 def hotel_med():
+    global h_med_price
     return render_template('med_hotel.html')
 
 # 렌트카 추천
 @app.route('/rentcar_med')
 def rentcar_med():
+    global c_med_price
     return render_template('med_rentcar.html')
 
 ######## 최고가 ########
 # 항공편 추천
 @app.route('/flight_max')
 def flight_max():
-    return render_template('max_flight.html')
+    global f_max_reco_1, f_max_reco_2
+    f_max_dict_1 = f_make_dict(f_max_reco_1)
+    f_max_dict_2 = f_make_dict(f_max_reco_2)
+    show_num = min(len(f_max_dict_1[2]), len(f_max_dict_2[2]))
+    repeat = range(1, show_num)
+    return render_template('max_flight.html', f_max_dict_1=f_max_dict_1, f_max_dict_2=f_max_dict_2, show_num=show_num, repeat = repeat)
 
 # 호텔 추천
 @app.route('/hotel_max')
 def hotel_max():
+    global h_max_price
     return render_template('max_hotel.html')
 
 # 렌트카 추천
 @app.route('/rentcar_max')
 def rentcar_max():
+    global c_max_price
     return render_template('max_rentcar.html')
 
 if __name__ == '__main__':
