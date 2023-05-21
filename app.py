@@ -454,6 +454,9 @@ def hotel_med():
     h_med_dict = h_med_make_dict(h_med_reco)
     show_num = len(h_med_dict[5])
     repeat = range(0, show_num)
+    middle_row = list(middle_row)
+    middle_row[0] = '0' + str(middle_row[0])[0] + '.' + str(middle_row[0])[1:]
+    middle_row[2] = '0' + str(middle_row[2])[0] + '.' + str(middle_row[2])[1:]
     
     
     return render_template('med_hotel.html', h_med_dict=h_med_dict, show_num=show_num, repeat=repeat, middle_row=middle_row,h_med_price=h_med_price)
