@@ -90,11 +90,10 @@ def result():
         """, (input_value_1,))
         f_med_reco_1 = [cur.fetchone() for _ in range(5)]
         f_med_price_1 = f_med_reco_1[0][-1]
-        print(f_med_price_1)
-        print(f_med_reco_1)
+
         # flight_jeju_gimpo 테이블에서 날짜가 backDate인 행들의 중간가 가져오기
         cur.execute("""
-            SELECT *
+            SELECT date,day,departure_time,arrival_time,airline,seat_class,price
             FROM (
                 SELECT *, ROW_NUMBER() OVER (ORDER BY price) AS row_num, COUNT(*) OVER () AS total_count
                 FROM flight_jeju_gimpo
