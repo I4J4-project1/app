@@ -211,7 +211,7 @@ def result():
         h_max_price = h_max_reco[0][-2]
         
         #렌터카 최저가
-        # feature : rent_date,rent_day,return_date,return_day,car_name,oiltype,num_seat,price,reserve_avail, rent_period
+        # feature : rent_date,rent_day,return_date,return_day,car_name,oiltype,num_seat,price,reserve_avail, rent_period, img_url
         cur.execute("""
             SELECT *
             FROM car_total
@@ -219,11 +219,11 @@ def result():
             ORDER BY price
         """, (5 if input_value_3 <= 3 else 7, input_value_1, input_value_2))
         c_min_reco = [cur.fetchone() for _ in range(5)]
-        c_min_price = c_min_reco[0][-3]
-            
+        c_min_price = c_min_reco[0][-4]
+        
         #렌터카 중간가
         cur.execute("""
-            SELECT rent_date,rent_day,return_date,return_day,car_name,oiltype,num_seat,price,reserve_avail,rent_period
+            SELECT rent_date,rent_day,return_date,return_day,car_name,oiltype,num_seat,price,reserve_avail,rent_period, img_url
             FROM (
                 SELECT *, ROW_NUMBER() OVER (ORDER BY price) AS row_num, COUNT(*) OVER () AS total_count
                 FROM car_total
@@ -233,7 +233,7 @@ def result():
             ORDER BY price;
         """, (5 if input_value_3 <= 3 else 7, input_value_1, input_value_2))
         c_med_reco = [cur.fetchone() for _ in range(5)]
-        c_med_price = c_med_reco[0][-3]
+        c_med_price = c_med_reco[0][-4]
         
         #렌터카 최고가
         cur.execute("""
@@ -243,7 +243,7 @@ def result():
             ORDER BY price DESC
         """, (5 if input_value_3 <= 3 else 7, input_value_1, input_value_2))
         c_max_reco = [cur.fetchone() for _ in range(5)]
-        c_max_price = c_max_reco[0][-3]
+        c_max_price = c_max_reco[0][-4]
         
         #항공,호텔,렌터카의 최저가,중간가,최고가 합산
 
@@ -341,10 +341,10 @@ def f_make_dict(data):
     return dict_
 
 # 렌터카 데이터 dict로 만들기
-# dict의 키 [0 - rent_date, 1 - rent_day, 2 - return_date, 3 - return_day, 4 - car_name, 5 - oiltype, 6 - num_seat, 7 - price, 8 - reserve_avail, 9 - rent_period]
+# dict의 키 [0 - rent_date, 1 - rent_day, 2 - return_date, 3 - return_day, 4 - car_name, 5 - oiltype, 6 - num_seat, 7 - price, 8 - reserve_avail, 9 - rent_period, 10 - img_url]
 def c_make_dict(data):
     dict_ = {}
-    for i in range(4, len(data[0])-1):
+    for i in range(4, len(data[0])):
         temp = []
         for reco in data:
             if reco == None:
@@ -432,6 +432,7 @@ def hotel_min():
 def rentcar_min():
     global c_min_reco
     c_min_dict = c_make_dict(c_min_reco)
+    print(c_min_dict)
     show_num = len(c_min_dict[5]) - 1
     repeat = range(1, show_num + 1)
     return render_template('min_rentcar.html', c_min_dict=c_min_dict, show_num=show_num, repeat=repeat)

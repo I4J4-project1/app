@@ -109,16 +109,20 @@
       </div>
     </div>
     
-    <!-- c_min_dict의 key [0 - rent_date, 1 - rent_day, 2 - return_date, 3 - return_day, 4 - car_name, 5 - oiltype, 6 - num_seat, 7 - price, 8 - reserve_avail, 9 - rent_period] -->
-
-    <div class="row align-items-md-stretch">
+    <!-- c_min_dict의 key [0 - rent_date, 1 - rent_day, 2 - return_date, 3 - return_day, 4 - car_name, 5 - oiltype, 6 - num_seat, 7 - price, 8 - reserve_avail, 9 - rent_period, 10 - img_url] -->
+    <div class="h-100 p-5 tbg-light border rounded-3">
       <div class="col-md-12 mb-6">
-        <div class="h-100 p-5 tbg-light border rounded-3">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <img src="{{c_min_dict[10][0]}}" width="300" height="300">
+          </div>
+          <div class="col-md-6">
             <h2>{{c_min_dict[4][0]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{c_min_dict[7][0]}}원</h2>
             <div>
-                <p>탑승 인원 {{c_min_dict[6][0]}}</p>
-                <p>유종 {{c_min_dict[5][0]}}</p>
+              <p>탑승 인원 {{c_min_dict[6][0]}}</p>
+              <p>유종 {{c_min_dict[5][0]}}</p>
             </div>
+          </div>
         </div>
       </div>
     </div>
@@ -131,17 +135,22 @@
     
     <!--rows-->
     {% for i in repeat %}
-        <div class="row align-items-md-stretch">
-            <div class="col-md-12 mb-6">
-                <div class="h-100 p-5 tbg-light border rounded-3">
-                    <h2>{{ c_min_dict[4][i] }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ c_min_dict[7][i] }}원</h2>
-                    <div>
-                      <p>탑승 인원 {{c_min_dict[6][i]}}</p>
-                      <p>유종 {{c_min_dict[5][i]}}</p>
-                    </div>
-                </div>
+      <div class="h-100 p-5 tbg-light border rounded-3">
+        <div class="col-md-12 mb-6">
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <img src="{{c_min_dict[10][i]}}" width="300" height="300">
             </div>
+            <div class="col-md-6">
+              <h2>{{c_min_dict[4][i]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{c_min_dict[7][i]}}원</h2>
+              <div>
+                <p>탑승 인원 {{c_min_dict[6][i]}}</p>
+                <p>유종 {{c_min_dict[5][i]}}</p>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     {% endfor %}
     
     <!--페이지 하단 부분-->
