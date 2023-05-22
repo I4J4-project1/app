@@ -77,7 +77,13 @@
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
       }
-
+      .col-md-6 {
+        flex: 1;
+        padding: 10px;
+      }
+      h2 {
+        font-size: 26px;
+      }
     </style>
 
     
@@ -117,11 +123,11 @@
     <div class="row align-items-md-stretch">
       <div class="col-md-12 mb-6">
         <div class="h-100 p-5 tbg-light border rounded-3">
-            <h2>{{h_max_dict[4][0]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{h_max_dict[9][0]}}원</h2>
+            <h2>{{h_max_dict[4][0]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{h_max_dict[9][0]}}원</h2>
             <div>
-                <p>투숙 가능 인원 {{h_max_dict[8][0]}}명 </p>
+                <p><br>투숙 가능 인원: {{h_max_dict[8][0]}}명 </p>
                 <p>{{h_max_dict[6][0]}}성급</p>
-                <p>평점 {{h_max_dict[7][0]}}점</p>
+                <p>평점: {{h_max_dict[7][0]}}점</p>
             </div>
         </div>
       </div>
@@ -134,19 +140,29 @@
     </div>
     
     <!--rows-->
-    {% for i in repeat %}
-        <div class="row align-items-md-stretch">
-            <div class="col-md-12 mb-6">
-                <div class="h-100 p-5 tbg-light border rounded-3">
-                    <h2>{{ h_max_dict[4][i] }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{h_max_dict[9][i]}}원</h2>
-                    <div>
-                      <p>투숙 가능 인원 {{h_max_dict[8][i]}}명 </p>
-                      <p>{{h_max_dict[6][i]}}성급</p>
-                      <p>평점 {{h_max_dict[7][i]}}점</p>
-                    </div>
+    {% for i in range(1, 5, 2) %}
+    <div class="row align-items-md-stretch">
+        <div class="col-md-6 mb-6">
+            <div class="h-100 p-5 tbg-light border rounded-3">
+                <h2>{{ h_max_dict[4][i] }}<br><br>{{h_max_dict[9][i]}}원</h2>
+                <div>
+                    <p><br>투숙 가능 인원: {{h_max_dict[8][i]}}명 </p>
+                    <p>{{h_max_dict[6][i]}}성급</p>
+                    <p>평점: {{h_max_dict[7][i]}}점</p>
                 </div>
             </div>
         </div>
+        <div class="col-md-6 mb-6">
+            <div class="h-100 p-5 tbg-light border rounded-3">
+                <h2>{{ h_max_dict[4][i+1] }}<br><br>{{h_max_dict[9][i+1]}}원</h2>
+                <div>
+                    <p><br>투숙 가능 인원: {{h_max_dict[8][i+1]}}명 </p>
+                    <p>{{h_max_dict[6][i+1]}}성급</p>
+                    <p>평점: {{h_max_dict[7][i+1]}}점</p>
+                </div>
+            </div>
+        </div>
+    </div>
     {% endfor %}
     
     <!--페이지 하단 부분-->
