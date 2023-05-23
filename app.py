@@ -203,7 +203,7 @@ def result():
         cur.execute("""
             SELECT *
             FROM hotel_total
-            WHERE customer_num = %s AND checkin_date = %s AND checkout_date = %s
+            WHERE customer_num = %s AND checkin_date = %s AND checkout_date = %s AND price <= 3000000
             ORDER BY price DESC
         """, (customer_num, input_value_1, input_value_2))
 
