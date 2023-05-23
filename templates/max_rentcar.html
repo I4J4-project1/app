@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, 그리고 Bootstrap 기여자들">
     <meta name="generator" content="Hugo 0.104.2">
-    <title>최고가 렌트카 추천</title>
+    <title>최고가 렌터카 추천</title>
 
     <link rel="canonical" href="https://getbootstrap.kr/docs/5.2/examples/jumbotron/">
 
@@ -97,6 +97,8 @@
         max-width: 100%;
         height: auto;
       }
+
+
     </style>
 
     
@@ -133,13 +135,12 @@
       <div class="col-md-12 mb-6">
         <div class="row align-items-center">
           <div class="col-md-6">
-            <img src="{{c_max_dict[10][0]}}" width="400" height="300">
+            <img src="{{c_max_dict[10][0]}}" width="400" height="300" style="margin-left: 70px;">
+            <p style="margin-left: 70pt;"><strong><span style="font-size: 1.2em;">{{c_max_dict[5][0]}} | {{c_max_dict[6][0]}}인승</span></strong></p>
           </div>
           <div class="col-md-6">
-            <h2>{{c_max_dict[4][0]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{c_max_dict[7][0]}}원</h2>
+            <h2 class="text-center"><strong><span style="font-size: 1.5em;">{{c_max_dict[4][0]}}<br><br><span style="color: red;">{{c_max_dict[7][0]}}원</span></span></strong></h2>
             <div>
-              <p><br>최대 탑승 인원:&nbsp;{{c_max_dict[6][0]}}명</p>
-              <p>{{c_max_dict[5][0]}}</p>
             </div>
           </div>
         </div>
@@ -160,13 +161,10 @@
                 <div class="row">
                     <div class="col-md-6">
                         <img src="{{c_max_dict[10][i]}}" width="300" height="225" style="object-fit: cover; object-position: left;">
+                        <p><strong><span style="font-size: 1.1em;">{{c_max_dict[5][i]}} | {{c_max_dict[6][i]}}인승</span></strong></p>
                     </div>
                     <div class="col-md-6">
-                        <h2>{{ c_max_dict[4][i] }}<br>{{c_max_dict[7][i]}}원</h2>
-                        <div>
-                            <p><br>최대 탑승 인원: {{c_max_dict[6][0]}}명</p>
-                            <p>{{c_max_dict[5][0]}}</p>
-                        </div>
+                      <h2 class="text-center"><strong><span style="font-size: 1.3em;">{{c_max_dict[4][i]}}<br><br><span style="color: red;">{{c_max_dict[7][i]}}원</span></span></strong></h2>
                     </div>
                 </div>
             </div>
@@ -176,13 +174,10 @@
                 <div class="row">
                     <div class="col-md-6">
                         <img src="{{c_max_dict[10][i+1]}}" width="300" height="225" style="object-fit: cover; object-position: left;">
+                        <p><strong><span style="font-size: 1.1em;">{{c_max_dict[5][i+1]}} | {{c_max_dict[6][i+1]}}인승</span></strong></p>
                     </div>
                     <div class="col-md-6">
-                        <h2>{{ c_max_dict[4][i+1] }}<br>{{c_max_dict[7][i+1]}}원</h2>
-                        <div>
-                            <p><br>최대 탑승 인원: {{c_max_dict[6][0]}}명</p>
-                            <p>{{c_max_dict[5][0]}}</p>
-                        </div>
+                      <h2 class="text-center"><strong><span style="font-size: 1.3em;">{{c_max_dict[4][i+1]}}<br><br><span style="color: red;">{{c_max_dict[7][i+1]}}원</span></span></strong></h2>
                     </div>
                 </div>
             </div>
