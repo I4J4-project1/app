@@ -69,7 +69,7 @@ def result():
             ORDER BY price ASC
         """, (input_value_1,))
         f_min_reco_1 = [cur.fetchone() for _ in range(5)]
-        f_min_price_1 = f_min_reco_1[0][-1]
+        f_min_price_1 = f_min_reco_1[0][-2]
 
         # flight_jeju_gimpo 테이블에서 날짜가 backDte인 행들의 최저가 가져오기
         cur.execute("""
@@ -79,11 +79,11 @@ def result():
             ORDER BY price ASC
         """, (input_value_2,))
         f_min_reco_2 = [cur.fetchone() for _ in range(5)]
-        f_min_price_2 = f_min_reco_2[0][-1]
+        f_min_price_2 = f_min_reco_2[0][-2]
 
         # flight_gimpo_jeju 테이블에서 날짜가 goDate인 행들의 중간가 가져오기
         cur.execute("""
-            SELECT date,day,departure_time,arrival_time,airline,seat_class,price
+            SELECT date,day,departure_time,arrival_time,flight_time,airline,seat_class,price,mark_url
             FROM (
                 SELECT *, ROW_NUMBER() OVER (ORDER BY price) AS row_num, COUNT(*) OVER () AS total_count
                 FROM flight_gimpo_jeju
@@ -93,11 +93,11 @@ def result():
             ORDER BY price;
         """, (input_value_1,))
         f_med_reco_1 = [cur.fetchone() for _ in range(5)]
-        f_med_price_1 = f_med_reco_1[0][-1]
+        f_med_price_1 = f_med_reco_1[0][-2]
 
         # flight_jeju_gimpo 테이블에서 날짜가 backDate인 행들의 중간가 가져오기
         cur.execute("""
-            SELECT date,day,departure_time,arrival_time,airline,seat_class,price
+            SELECT date,day,departure_time,arrival_time,flight_time,airline,seat_class,price,mark_url
             FROM (
                 SELECT *, ROW_NUMBER() OVER (ORDER BY price) AS row_num, COUNT(*) OVER () AS total_count
                 FROM flight_jeju_gimpo
@@ -107,7 +107,7 @@ def result():
             ORDER BY price;
         """, (input_value_2,))
         f_med_reco_2 = [cur.fetchone() for _ in range(5)]
-        f_med_price_2 = f_med_reco_2[0][-1]
+        f_med_price_2 = f_med_reco_2[0][-2]
 
         # flight_gimpo_jeju 테이블에서 날짜가 goDate인 행들의 최고가 가져오기
         cur.execute("""
@@ -117,7 +117,7 @@ def result():
             ORDER BY price DESC
         """, (input_value_1,))
         f_max_reco_1 = [cur.fetchone() for _ in range(5)]
-        f_max_price_1 = f_max_reco_1[0][-1]
+        f_max_price_1 = f_max_reco_1[0][-2]
         # flight_jeju_gimpo 테이블에서 날짜가 backDate인 행들의 최고가 가져오기
         cur.execute("""
             SELECT *
@@ -126,7 +126,7 @@ def result():
             ORDER BY price DESC
         """, (input_value_2,))
         f_max_reco_2 = [cur.fetchone() for _ in range(5)]
-        f_max_price_2 = f_max_reco_2[0][-1]
+        f_max_price_2 = f_max_reco_2[0][-2]
 
         # 최저가 더한 값
         f_total_min_price = f_min_price_1 + f_min_price_2
@@ -320,7 +320,7 @@ def dash():
 
 
 # 항공편 데이터 dict로 만들기
-# dict의 key [0 - date, 1 - day, 2 - start_time, 3 - arrival_time, 4 - airline, 5 - seat, 6 - price]
+# dict의 key [0 - date, 1 - day, 2 - start_time, 3 - arrival_time, 4 - airline, 5 - flight_time, 6 - seat, 7 - price, 8 - mark_url]
 def f_make_dict(data):
     dict_ = {}
     for i in range(1, len(data[0])):
@@ -337,7 +337,7 @@ def f_make_dict(data):
     dict_[1] = dict_[1][0]
     dict_[2] = ['0' + str(time)[0] + '시 ' + str(time)[1:] + '분' if len(str(time)) == 3 else str(time)[:2] + '시 ' + str(time)[2:] + '분' for time in dict_[2]]
     dict_[3] = ['0' + str(time)[0] + '시 ' + str(time)[1:] + '분' if len(str(time)) == 3 else str(time)[:2] + '시 ' + str(time)[2:] + '분' for time in dict_[3]]
-    dict_[6] = [format(price, ',') for price in dict_[6]]
+    dict_[7] = [format(price, ',') for price in dict_[7]]
     return dict_
 
 # 렌터카 데이터 dict로 만들기
@@ -416,7 +416,8 @@ def flight_min():
     f_min_dict_2 = f_make_dict(f_min_reco_2)
     show_num = min(len(f_min_dict_1[2]), len(f_min_dict_2[2])) - 1
     repeat = range(1, show_num + 1)
-    return render_template('min_flight.html', f_min_dict_1=f_min_dict_1, f_min_dict_2=f_min_dict_2, show_num=show_num, repeat = repeat)
+    schedule = str(int(f_min_dict_2[0][-2:]) - int(f_min_dict_1[0][-2:])) + '박 ' + str(int(f_min_dict_2[0][-2:]) - int(f_min_dict_1[0][-2:]) + 1) + '일'
+    return render_template('min_flight.html', f_min_dict_1=f_min_dict_1, f_min_dict_2=f_min_dict_2, show_num=show_num, repeat = repeat, schedule=schedule)
 
 # 호텔 추천
 @app.route('/hotel_min')
@@ -432,7 +433,6 @@ def hotel_min():
 def rentcar_min():
     global c_min_reco
     c_min_dict = c_make_dict(c_min_reco)
-    print(c_min_dict)
     show_num = len(c_min_dict[5]) - 1
     repeat = range(1, show_num + 1)
     return render_template('min_rentcar.html', c_min_dict=c_min_dict, show_num=show_num, repeat=repeat)
@@ -446,7 +446,8 @@ def flight_med():
     f_med_dict_2 = f_make_dict(f_med_reco_2)
     show_num = min(len(f_med_dict_1[2]), len(f_med_dict_2[2])) - 1
     repeat = range(1, show_num + 1)
-    return render_template('med_flight.html', f_med_dict_1=f_med_dict_1, f_med_dict_2=f_med_dict_2, show_num=show_num, repeat=repeat)
+    schedule = str(int(f_med_dict_2[0][-2:]) - int(f_med_dict_1[0][-2:])) + '박 ' + str(int(f_med_dict_2[0][-2:]) - int(f_med_dict_1[0][-2:]) + 1) + '일'
+    return render_template('med_flight.html', f_med_dict_1=f_med_dict_1, f_med_dict_2=f_med_dict_2, show_num=show_num, repeat=repeat, schedule=schedule)
 
 # 호텔 추천
 @app.route('/hotel_med')
@@ -480,7 +481,8 @@ def flight_max():
     f_max_dict_2 = f_make_dict(f_max_reco_2)
     show_num = min(len(f_max_dict_1[2]), len(f_max_dict_2[2])) - 1
     repeat = range(1, show_num + 1)
-    return render_template('max_flight.html', f_max_dict_1=f_max_dict_1, f_max_dict_2=f_max_dict_2, show_num=show_num, repeat = repeat)
+    schedule = str(int(f_max_dict_2[0][-2:]) - int(f_max_dict_1[0][-2:])) + '박 ' + str(int(f_max_dict_2[0][-2:]) - int(f_max_dict_1[0][-2:]) + 1) + '일'
+    return render_template('max_flight.html', f_max_dict_1=f_max_dict_1, f_max_dict_2=f_max_dict_2, show_num=show_num, repeat = repeat, schedule=schedule)
 
 # 호텔 추천
 @app.route('/hotel_max')
@@ -495,7 +497,6 @@ def hotel_max():
 @app.route('/rentcar_max')
 def rentcar_max():
     global c_max_reco
-    print(c_max_reco)
     c_max_dict = c_make_dict(c_max_reco)
     show_num = len(c_max_dict[5]) - 1
     repeat = range(1, show_num + 1)
