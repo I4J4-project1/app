@@ -317,6 +317,20 @@ def result():
 def dash():
     return render_template('dash.html')
 
+@app.route('/dash_flight', methods=['GET','POST'])
+def dash_flight():
+    return render_template('dash_flight.html')
+
+@app.route('/dash_hotel', methods=['GET','POST'])
+def dash_hotel():
+    return render_template('dash_hotel.html')
+
+@app.route('/dash_rentcar', methods=['GET','POST'])
+def dash_rentcar():
+    return render_template('dash_rentcar.html')
+
+
+
 
 
 # 항공편 데이터 dict로 만들기
