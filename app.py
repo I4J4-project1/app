@@ -40,8 +40,8 @@ def result():
     global f_max_reco_1, f_max_reco_2
     global f_avg_reco_1, f_avg_reco_2
     global c_min_reco, c_avg_reco, c_max_reco
-    global h_min_reco, h_avg_reco, h_max_reco, h_avg_price
-    global middle_row
+    global h_min_reco, h_avg_reco, h_max_reco
+
 
     input_value_1 = request.args.get('goDate')
     input_value_2 = request.args.get('backDate')
@@ -159,35 +159,6 @@ def result():
         # 8: customer_num 9: price 10: stay_period
 
         cur.execute("""
-            SELECT *
-            FROM hotel_total
-            WHERE customer_num = %s AND checkin_date = %s AND checkout_date = %s
-            ORDER BY price
-        """, (customer_num, input_value_1, input_value_2))
-
-        results = cur.fetchall()  # 쿼리 결과에서 모든 행을 가져옵니다.
-        num_results = len(results)
-
-        if num_results >= 5:
-            # 중간 행의 인덱스를 계산합니다.
-            middle_index = num_results // 2
-            
-            # 중간 행을 가져옵니다.
-            middle_row = results[middle_index]
-
-            # 중간값을 저장합니다.
-            h_avg_price = middle_row[9]  # 인덱스 9는 price에 해당합니다.
-
-            # 중간값을 제외한 나머지 4개의 행을 저장합니다.
-            other_rows = results[middle_index - 2 : middle_index] + results[middle_index + 1 : middle_index + 3]
-
-            # 나머지 4개의 행에서 모든 열을 추출하여 저장합니다.
-            h_avg_reco = [row for row in other_rows]
-        else:
-            # 결과 행의 개수가 5개 미만인 경우 처리합니다.
-            h_avg_reco = [row for row in results]
-            h_avg_price = None  # 중간값이 없으므로 None으로 설정합니다.
-        cur.execute("""
         SELECT *
         FROM hotel_total
         WHERE customer_num = %s AND checkin_date = %s AND checkout_date = %s AND price <= 3000000
@@ -233,15 +204,14 @@ def result():
         
         #렌터카 평균가
         cur.execute("""
-            SELECT rent_date,rent_day,return_date,return_day,car_name,oiltype,num_seat,price,reserve_avail,rent_period, img_url
-            FROM (
-                SELECT *, ROW_NUMBER() OVER (ORDER BY price) AS row_num, COUNT(*) OVER () AS total_count
-                FROM car_total
-                WHERE num_seat <= %s AND rent_date = %s AND return_date = %s AND reserve_avail = 1
-            ) subquery
-            WHERE row_num BETWEEN (total_count + 1) / 2 - 2 AND (total_count + 1) / 2 + 2
-            ORDER BY price;
-        """, (5 if input_value_3 <= 3 else 7, input_value_1, input_value_2))
+        SELECT *
+        FROM car_total
+        WHERE num_seat <= %s AND rent_date = %s AND return_date = %s 
+        ORDER BY ABS(price - (SELECT AVG(price) FROM car_total
+        WHERE num_seat <= %s AND rent_date = %s AND return_date = %s ))
+        LIMIT 5
+        """, (num_seat, input_value_1, input_value_2,num_seat, input_value_1, input_value_2))
+
         c_avg_reco = [cur.fetchone() for _ in range(5)]
         c_avg_price = c_avg_reco[0][-4]
         
@@ -288,7 +258,7 @@ def result():
                            f_total_avg_price=f_total_avg_price, f_total_max_price=f_total_max_price,
                            h_min_price=h_min_price,h_avg_price=h_avg_price,h_max_price=h_max_price,
                            c_min_price=c_min_price,c_avg_price=c_avg_price,c_max_price=c_max_price,
-                           min_price=min_price,avg_price=avg_price,max_price=max_price,input_value_3=input_value_3)
+                           min_price=min_price,avg_price=avg_price,max_price=max_price,input_value_3=input_value_3,num_seat=num_seat)
     
 
     if request.method == 'POST':
@@ -477,16 +447,11 @@ def flight_avg():
 # 호텔 추천
 @app.route('/hotel_avg')
 def hotel_avg():
-    global h_avg_reco, middle_row,h_avg_price
-    h_avg_dict = h_avg_make_dict(h_avg_reco)
-    show_num = len(h_avg_dict[5])
-    repeat = range(0, show_num)
-    middle_row = list(middle_row)
-    middle_row[0] = '0' + str(middle_row[0])[0] + '.' + str(middle_row[0])[1:]
-    middle_row[2] = '0' + str(middle_row[2])[0] + '.' + str(middle_row[2])[1:]
-    
-    
-    return render_template('avg_hotel.html', h_avg_dict=h_avg_dict, show_num=show_num, repeat=repeat, middle_row=middle_row,h_avg_price=h_avg_price)
+    global h_avg_reco
+    h_avg_dict = h_make_dict(h_avg_reco)
+    show_num = len(h_avg_dict[5]) - 1
+    repeat = range(1, show_num + 1)
+    return render_template('avg_hotel.html', h_avg_dict=h_avg_dict, show_num=show_num, repeat=repeat)
 
 # 렌트카 추천
 @app.route('/rentcar_avg')
