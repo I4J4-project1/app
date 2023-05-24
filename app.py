@@ -260,7 +260,7 @@ def result():
                            c_min_price=c_min_price,c_avg_price=c_avg_price,c_max_price=c_max_price,
                            min_price=min_price,avg_price=avg_price,max_price=max_price,input_value_3=input_value_3,
                            num_seat_min=c_min_reco[0][-5],num_seat_avg=c_avg_reco[0][-5],num_seat_max=c_max_reco[0][-5],
-                           )
+                           customer_num=customer_num)
     
 
     if request.method == 'POST':
@@ -423,7 +423,8 @@ def hotel_min():
     h_min_dict = h_make_dict(h_min_reco)
     show_num = len(h_min_dict[5]) - 1
     repeat = range(1, show_num + 1)
-    return render_template('min_hotel.html', h_min_dict=h_min_dict, show_num=show_num, repeat=repeat)
+    schedule = h_min_dict[10][:2]
+    return render_template('min_hotel.html', h_min_dict=h_min_dict, show_num=show_num, repeat=repeat, schedule=schedule)
 
 # 렌트카 추천
 @app.route('/rentcar_min')
@@ -432,7 +433,8 @@ def rentcar_min():
     c_min_dict = c_make_dict(c_min_reco)
     show_num = len(c_min_dict[5]) - 1
     repeat = range(1, show_num + 1)
-    return render_template('min_rentcar.html', c_min_dict=c_min_dict, show_num=show_num, repeat=repeat)
+    schedule = c_min_dict[9][0] + '일'
+    return render_template('min_rentcar.html', c_min_dict=c_min_dict, show_num=show_num, repeat=repeat, schedule=schedule)
 
 ######## 평균가 ########
 # 항공편 추천
@@ -453,7 +455,8 @@ def hotel_avg():
     h_avg_dict = h_make_dict(h_avg_reco)
     show_num = len(h_avg_dict[5]) - 1
     repeat = range(1, show_num + 1)
-    return render_template('avg_hotel.html', h_avg_dict=h_avg_dict, show_num=show_num, repeat=repeat)
+    schedule = h_avg_dict[10][:2]
+    return render_template('avg_hotel.html', h_avg_dict=h_avg_dict, show_num=show_num, repeat=repeat, schedule=schedule)
 
 # 렌트카 추천
 @app.route('/rentcar_avg')
@@ -462,7 +465,8 @@ def rentcar_avg():
     c_avg_dict = c_make_dict(c_avg_reco)
     show_num = len(c_avg_dict[5]) - 1
     repeat = range(1, show_num + 1)
-    return render_template('avg_rentcar.html', c_avg_dict=c_avg_dict, show_num=show_num, repeat=repeat)   
+    schedule = c_avg_dict[9][0] + '일'
+    return render_template('avg_rentcar.html', c_avg_dict=c_avg_dict, show_num=show_num, repeat=repeat, schedule=schedule)   
 
 ######## 최고가 ########
 # 항공편 추천
@@ -483,7 +487,8 @@ def hotel_max():
     h_max_dict = h_make_dict(h_max_reco)
     show_num = len(h_max_dict[5]) - 1
     repeat = range(1, show_num + 1)
-    return render_template('max_hotel.html', h_max_dict=h_max_dict, show_num=show_num, repeat=repeat)
+    schedule = h_max_dict[10][:2]
+    return render_template('max_hotel.html', h_max_dict=h_max_dict, show_num=show_num, repeat=repeat, schedule=schedule)
 
 # 렌트카 추천
 @app.route('/rentcar_max')
@@ -492,7 +497,8 @@ def rentcar_max():
     c_max_dict = c_make_dict(c_max_reco)
     show_num = len(c_max_dict[5]) - 1
     repeat = range(1, show_num + 1)
-    return render_template('max_rentcar.html', c_max_dict=c_max_dict, show_num=show_num, repeat=repeat)
+    schedule = c_max_dict[9][0] + '일'
+    return render_template('max_rentcar.html', c_max_dict=c_max_dict, show_num=show_num, repeat=repeat, schedule=schedule)
 
 if __name__ == '__main__':
     app.run(debug=True)
