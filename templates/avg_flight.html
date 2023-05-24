@@ -105,10 +105,10 @@
     <!-- 평균가 상품 -->
     <div class="p-4 mb-4 bg-light rounded-3 "> 
       <div class="container-fluid">
-          <h4>{{f_med_dict_1[0]}} {{f_med_dict_1[1]}} - {{f_med_dict_2[0]}} {{f_med_dict_2[1]}}({{schedule}}) 일정의 항공권 평균가 상품입니다</h4>
+          <h4>{{f_avg_dict_1[0]}} {{f_avg_dict_1[1]}} - {{f_avg_dict_2[0]}} {{f_avg_dict_2[1]}}({{schedule}}) 일정의 항공권 평균가 상품입니다</h4>
       </div>
     </div>
-    <!-- f_med_dict의 key [0 - date, 1 - day, 2 - start_time, 3 - arrival_time, 4 - airline, 5 - flight_time, 6 - seat, 7 - price, 8 - mark_url] -->
+    <!-- f_avg_dict의 key [0 - date, 1 - day, 2 - start_time, 3 - arrival_time, 4 - airline, 5 - flight_time, 6 - seat, 7 - price, 8 - mark_url] -->
 
     <div class="row align-items-md-stretch">
       <div class="col-md-6 mb-3">
@@ -128,20 +128,20 @@
           <div class="container text-center">
             <div class="row row-cols-4">
               <div class="col">
-              	<p><img src = {{f_med_dict_1[8][0]}} height="20" width="20"></p>
-                <span>{{f_med_dict_1[4][0]}}</span>
+              	<p><img src = {{f_avg_dict_1[8][0]}} height="20" width="20"></p>
+                <span>{{f_avg_dict_1[4][0]}}</span>
               </div>
               <div class="col-6 text-center">
                 <p class="dep_time">
-                  {{f_med_dict_1[2][0]}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="bi bi-arrow-right"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{f_med_dict_1[3][0]}}
+                  {{f_avg_dict_1[2][0]}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="bi bi-arrow-right"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{f_avg_dict_1[3][0]}}
                 </p>
                 <span style="font-weight: lighter; font-size: small;">
-                  GMP &nbsp;&nbsp;&nbsp;&nbsp;{{f_med_dict_1[5][0]}} &nbsp;&nbsp;&nbsp;&nbsp; CJU
+                  GMP &nbsp;&nbsp;&nbsp;&nbsp;{{f_avg_dict_1[5][0]}} &nbsp;&nbsp;&nbsp;&nbsp; CJU
                 </span>
               </div>
               <div class="col">
-                <p class="seat_class">{{f_med_dict_2[6][0]}}</p>
-                <p>{{f_med_dict_1[7][0]}}원</p>
+                <p class="seat_class">{{f_avg_dict_2[6][0]}}</p>
+                <p>{{f_avg_dict_1[7][0]}}원</p>
               </div>
             </div>
           </div>
@@ -166,20 +166,20 @@
           <div class="container text-center">
             <div class="row row-cols-4">
               <div class="col">
-              	<p><img src = {{f_med_dict_2[8][0]}} height="20" width="20"></p>
-                <span>{{f_med_dict_2[4][0]}}</span>
+              	<p><img src = {{f_avg_dict_2[8][0]}} height="20" width="20"></p>
+                <span>{{f_avg_dict_2[4][0]}}</span>
               </div>
               <div class="col-6 text-center">
                 <p class="dep_time">
-                  {{f_med_dict_2[2][0]}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="bi bi-arrow-right"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{f_med_dict_2[3][0]}}
+                  {{f_avg_dict_2[2][0]}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="bi bi-arrow-right"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{f_avg_dict_2[3][0]}}
                 </p>
                 <span style="font-weight: lighter; font-size: small;">
-                  GMP &nbsp;&nbsp;&nbsp;&nbsp;{{f_med_dict_2[5][0]}}&nbsp;&nbsp;&nbsp;&nbsp; CJU  
+                  GMP &nbsp;&nbsp;&nbsp;&nbsp;{{f_avg_dict_2[5][0]}}&nbsp;&nbsp;&nbsp;&nbsp; CJU  
                 </span>
               </div>
               <div class="col">
-                <p class="seat_class">{{f_med_dict_2[6][0]}}</p>
-                <p>{{f_med_dict_2[7][0]}}원</p>
+                <p class="seat_class">{{f_avg_dict_2[6][0]}}</p>
+                <p>{{f_avg_dict_2[7][0]}}원</p>
               </div>
             </div>
           </div>
@@ -201,20 +201,20 @@
             <div class="container text-center">
               <div class="row row-cols-4">
                 <div class="col">
-                  <p><img src = {{f_med_dict_1[8][i]}} height="20" width="20"></p>
-                  <span>{{f_med_dict_1[4][i]}}</span>
+                  <p><img src = {{f_avg_dict_1[8][i]}} height="20" width="20"></p>
+                  <span>{{f_avg_dict_1[4][i]}}</span>
                 </div>
                 <div class="col-6 text-center">
                   <p class="dep_time">
-                    {{f_med_dict_1[2][i]}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="bi bi-arrow-right"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{f_med_dict_1[3][i]}}
+                    {{f_avg_dict_1[2][i]}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="bi bi-arrow-right"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{f_avg_dict_1[3][i]}}
                   </p>
                   <span style="font-weight: lighter; font-size: small;">
-                    GMP &nbsp;&nbsp;&nbsp;&nbsp;{{f_med_dict_1[5][i]}}&nbsp;&nbsp;&nbsp;&nbsp; CJU 
+                    GMP &nbsp;&nbsp;&nbsp;&nbsp;{{f_avg_dict_1[5][i]}}&nbsp;&nbsp;&nbsp;&nbsp; CJU 
                   </span>
                 </div>
                 <div class="col">
-                  <p class="seat_class">{{f_med_dict_2[6][i]}}</p>
-                  <p>{{f_med_dict_1[7][i]}}원</p>
+                  <p class="seat_class">{{f_avg_dict_2[6][i]}}</p>
+                  <p>{{f_avg_dict_1[7][i]}}원</p>
                 </div>
               </div>
             </div>
@@ -228,20 +228,20 @@
             <div class="container text-center">
               <div class="row row-cols-4">
                 <div class="col">
-                  <p><img src = {{f_med_dict_2[8][i]}} height="20" width="20"></p>
-                  <span>{{f_med_dict_2[4][i]}}</span>
+                  <p><img src = {{f_avg_dict_2[8][i]}} height="20" width="20"></p>
+                  <span>{{f_avg_dict_2[4][i]}}</span>
                 </div>
                 <div class="col-6 text-center">
                   <p class="dep_time">
-                    {{f_med_dict_2[2][i]}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="bi bi-arrow-right"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{f_med_dict_2[3][i]}}
+                    {{f_avg_dict_2[2][i]}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="bi bi-arrow-right"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{f_avg_dict_2[3][i]}}
                   </p>
                   <span style="font-weight: lighter; font-size: small;">
-                    GMP &nbsp;&nbsp;&nbsp;&nbsp;{{f_med_dict_2[5][i]}}&nbsp;&nbsp;&nbsp;&nbsp; CJU 
+                    GMP &nbsp;&nbsp;&nbsp;&nbsp;{{f_avg_dict_2[5][i]}}&nbsp;&nbsp;&nbsp;&nbsp; CJU 
                   </span>
                 </div>
                 <div class="col">
-                  <p class="seat_class">{{f_med_dict_2[6][i]}}</p>
-                  <p>{{f_med_dict_2[7][i]}}원</p>
+                  <p class="seat_class">{{f_avg_dict_2[6][i]}}</p>
+                  <p>{{f_avg_dict_2[7][i]}}원</p>
                 </div>
               </div>
             </div>

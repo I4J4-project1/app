@@ -165,15 +165,15 @@
             <h4 class="my-0 fw-normal">평균가</h4>
           </div>
           <div class="card-body">
-            <h1 class="card-title pricing-card-title"> 총 {{med_price}}원</h1>
+            <h1 class="card-title pricing-card-title"> 총 {{avg_price}}원</h1>
             <ul class="list-unstyled mt-3 mb-4">
-              <li>항공 {{f_total_med_price}}원 <span class="people-value">{{input_value_3}}명 기준</li>
+              <li>항공 {{f_total_avg_price}}원 <span class="people-value">{{input_value_3}}명 기준</li>
               <li>호텔 {{h_avg_price}}원</li>
-              <li>렌터카 {{c_avg_price}}원 <span class="people-value">{{num_seat}}인승</li>
+              <li>렌터카 {{c_avg_price}}원</li>
             </ul>
             <form method="POST" action="/result">
               <div class="select">
-                <select class="form-select" aria-label="Default select example" name="medprice_option" onchange="if(this.value==='평균가 상품 추천') return false; this.form.submit();" required>
+                <select class="form-select" aria-label="Default select example" name="avgprice_option" onchange="if(this.value==='평균가 상품 추천') return false; this.form.submit();" required>
                   <option selected>평균가 상품 추천</option>
                   <option value="항공">항공권</option>
                   <option value="숙박">호텔</option>
