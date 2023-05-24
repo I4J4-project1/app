@@ -185,10 +185,10 @@ def result():
         h_max_reco = [cur.fetchone() for _ in range(5)]
         h_max_price = h_max_reco[0][-2]
         
-        if input_value_3 <= 3:
-            num_seat= 5
-        elif input_value_3 == 4:
-            num_seat= 7
+        # if input_value_3 <= 3:
+        #     num_seat= 5
+        # elif input_value_3 == 4:
+        #     num_seat= 7
 
         
         #렌터카 최저가
@@ -210,7 +210,7 @@ def result():
         ORDER BY ABS(price - (SELECT AVG(price) FROM car_total
         WHERE num_seat <= %s AND rent_date = %s AND return_date = %s ))
         LIMIT 5
-        """, (num_seat, input_value_1, input_value_2,num_seat, input_value_1, input_value_2))
+        """, (5 if input_value_3 <= 3 else 7, input_value_1, input_value_2,5 if input_value_3 <= 3 else 7, input_value_1, input_value_2))
 
         c_avg_reco = [cur.fetchone() for _ in range(5)]
         c_avg_price = c_avg_reco[0][-4]
@@ -258,7 +258,9 @@ def result():
                            f_total_avg_price=f_total_avg_price, f_total_max_price=f_total_max_price,
                            h_min_price=h_min_price,h_avg_price=h_avg_price,h_max_price=h_max_price,
                            c_min_price=c_min_price,c_avg_price=c_avg_price,c_max_price=c_max_price,
-                           min_price=min_price,avg_price=avg_price,max_price=max_price,input_value_3=input_value_3,num_seat=num_seat)
+                           min_price=min_price,avg_price=avg_price,max_price=max_price,input_value_3=input_value_3,
+                           num_seat_min=c_min_reco[0][-5],num_seat_avg=c_avg_reco[0][-5],num_seat_max=c_max_reco[0][-5],
+                           )
     
 
     if request.method == 'POST':

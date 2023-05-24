@@ -104,8 +104,9 @@
     </header>
     <!-- 최저가 상품 -->
     <div class="p-4 mb-4 bg-light rounded-3 "> 
-      <div class="container-fluid">
-          <h4>{{f_min_dict_1[0]}} {{f_min_dict_1[1]}} - {{f_min_dict_2[0]}} {{f_min_dict_2[1]}}({{schedule}}) 일정의 항공권 최저가 상품입니다.</h4>
+      <div class="container-fluid" style="white-space: nowrap;">
+            <h4>{{f_min_dict_1[0]}} {{f_min_dict_1[1]}} - {{f_min_dict_2[0]}} {{f_min_dict_2[1]}}({{schedule}}) 일정의 항공권 최저가 상품입니다.</h4>
+            <span><i class="bi bi-info-circle"></i> 가격은 1인 기준입니다.</span>
       </div>
     </div>
     <!-- f_min_dict의 key [0 - date, 1 - day, 2 - start_time, 3 - arrival_time, 4 - airline, 5 - flight_time, 6 - seat, 7 - price, 8 - mark_url] -->

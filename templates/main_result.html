@@ -135,21 +135,21 @@
       <div class="col-lg-4">
         <div class="card mb-4 rounded-3 shadow-sm">
           <div class="card-header py-3">
-            <h4 class="my-0 fw-normal">최저가</h4>
+            <h4 class="my-0 fw-normal">이코노미</h4>
           </div>
           <div class="card-body">
             <h1 class="card-title pricing-card-title"> 총 {{min_price}}원</h1>
             <ul class="list-unstyled mt-3 mb-4">
-                <li>항공 {{f_total_min_price}}원 <span class="people-value">{{input_value_3}}명 기준</li>
-                <li>호텔 {{h_min_price}}원</li>
-                <li>렌터카 {{c_min_price}}원 <span class="people-value">{{num_seat}}인승</li>
+                <li>항공 {{f_total_min_price}}원 <span class="people-value">{{input_value_3}}명 기준</span></li>
+                <li>호텔 {{h_min_price}}원 <span class="people-value">{{input_value_3}}인실</span></li>
+                <li>렌터카 {{c_min_price}}원 <span class="people-value">{{num_seat_min}}인승</span></li>
             </ul>
             <!--버튼으로 변경시 아래 주석 제거-->
             <!--<button type="button" class="w-100 btn btn-lg btn-outline-secondary">more</button>-->
             <form method="POST" action="/result">
               <div class="select">
                 <select class="form-select" aria-label="Default select example" name="lowprice_option" onchange="if(this.value==='최저가 상품 추천') return false; this.form.submit();" required>
-                  <option selected>최저가 상품 추천</option>
+                  <option selected>이코노미 상품 추천</option>
                   <option value="항공">항공권</option>
                   <option value="숙박">호텔</option>
                   <option value="렌트">렌터카</option>
@@ -162,19 +162,19 @@
       <div class="col-lg-4">
         <div class="card mb-4 rounded-3 shadow-sm">
           <div class="card-header py-3">
-            <h4 class="my-0 fw-normal">평균가</h4>
+            <h4 class="my-0 fw-normal">스탠다드</h4>
           </div>
           <div class="card-body">
             <h1 class="card-title pricing-card-title"> 총 {{avg_price}}원</h1>
             <ul class="list-unstyled mt-3 mb-4">
-              <li>항공 {{f_total_avg_price}}원 <span class="people-value">{{input_value_3}}명 기준</li>
-              <li>호텔 {{h_avg_price}}원</li>
-              <li>렌터카 {{c_avg_price}}원 <span class="people-value">{{num_seat}}인승</li>
+              <li>항공 {{f_total_avg_price}}원 <span class="people-value">{{input_value_3}}명 기준</span></li>
+              <li>호텔 {{h_avg_price}}원 <span class="people-value">{{input_value_3}}인실</span></li>
+              <li>렌터카 {{c_avg_price}}원 <span class="people-value">{{num_seat_avg}}인승</span></li>
             </ul>
             <form method="POST" action="/result">
               <div class="select">
                 <select class="form-select" aria-label="Default select example" name="avgprice_option" onchange="if(this.value==='평균가 상품 추천') return false; this.form.submit();" required>
-                  <option selected>평균가 상품 추천</option>
+                  <option selected>스탠다드 상품 추천</option>
                   <option value="항공">항공권</option>
                   <option value="숙박">호텔</option>
                   <option value="렌트">렌터카</option>
@@ -187,19 +187,19 @@
       <div class="col-lg-4">
         <div class="card mb-4 rounded-3 shadow-sm">
           <div class="card-header py-3">
-            <h4 class="my-0 fw-normal">최고가</h4>
+            <h4 class="my-0 fw-normal">프리미엄</h4>
           </div>
           <div class="card-body">
             <h1 class="card-title pricing-card-title"> 총 {{max_price}}원</h1>
             <ul class="list-unstyled mt-3 mb-4">
-              <li>항공 {{f_total_max_price}}원 <span class="people-value">{{input_value_3}}명 기준</li>
-              <li>호텔 {{h_max_price}}원</li>
-              <li>렌터카 {{c_max_price}}원 <span class="people-value">{{num_seat}}인승</li>
+              <li>항공 {{f_total_max_price}}원 <span class="people-value">{{input_value_3}}명 기준</span></li>
+              <li>호텔 {{h_max_price}}원 <span class="people-value">{{input_value_3}}인실</span></li>
+              <li>렌터카 {{c_max_price}}원 <span class="people-value">{{num_seat_max}}인승</span></li>
             </ul>
             <form method="POST" action="/result">
               <div class="select">
                 <select class="form-select" aria-label="Default select example" name="highprice_option" onchange="if(this.value==='최고가 상품 추천') return false; this.form.submit();" required>
-                  <option selected>최고가 상품 추천</option>
+                  <option selected>프리미엄 상품 추천</option>
                   <option value="항공">항공권</option>
                   <option value="숙박">호텔</option>
                   <option value="렌트">렌터카</option>
