@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="ko">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -10,196 +11,220 @@
 
     <link rel="canonical" href="https://getbootstrap.kr/docs/5.2/examples/jumbotron/">
 
-    
+
 
     <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
 
     <!-- Favicons -->
-<link rel="apple-touch-icon" href="/docs/5.2/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
-<link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
-<link rel="manifest" href="/docs/5.2/assets/img/favicons/manifest.json">
-<link rel="mask-icon" href="/docs/5.2/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
-<link rel="icon" href="/docs/5.2/assets/img/favicons/favicon.ico">
-<meta name="theme-color" content="#712cf9">
+    <link rel="apple-touch-icon" href="/docs/5.2/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="/docs/5.2/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="manifest" href="/docs/5.2/assets/img/favicons/manifest.json">
+    <link rel="mask-icon" href="/docs/5.2/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
+    <link rel="icon" href="/docs/5.2/assets/img/favicons/favicon.ico">
+    <meta name="theme-color" content="#712cf9">
 
 
     <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
         }
-      }
 
-      .b-example-divider {
-        height: 3rem;
-        background-color: rgba(0, 0, 0, .1);
-        border: solid rgba(0, 0, 0, .15);
-        border-width: 1px 0;
-        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-      }
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
 
-      .b-example-vr {
-        flex-shrink: 0;
-        width: 1.5rem;
-        height: 100vh;
-      }
+        .b-example-divider {
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
 
-      .bi {
-        vertical-align: -.125em;
-        fill: currentColor;
-      }
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
 
-      .nav-scroller {
-        position: relative;
-        z-index: 2;
-        height: 2.75rem;
-        overflow-y: hidden;
-      }
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
 
-      .nav-scroller .nav {
-        display: flex;
-        flex-wrap: nowrap;
-        padding-bottom: 1rem;
-        margin-top: -1px;
-        overflow-x: auto;
-        text-align: center;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-      }
-      .col-md-6 {
-        flex: 1;
-        padding: 10px;
-      }
-      .row {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-      }
-      
-      .col-md-6 {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-      
-      .col-md-6 img {
-        max-width: 100%;
-        height: auto;
-      }
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
 
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
 
+        .col-md-6 {
+            flex: 1;
+            padding: 10px;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .col-md-6 {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .col-md-6 img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .half-width {
+            width: 50%;
+        }
+        .white-border {
+          border-color: white !important;
+        }
+        
     </style>
 
-    
-  </head>
-  <body>
-    
-<main>
-  <div class="container py-4">
-    <!--헤더 구성-->
-    <header>
-      <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
-          <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" class="me-2" viewBox="0 0 118 94" role="img"><title>Bootstrap</title>
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z" fill="currentColor"></path></svg>
-              <span class="fs-4">제주도 경비 예측</span>
-          </a>
 
-          <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-              <a class="me-3 py-2 text-dark text-decoration-none" href="/">Home</a>
-              <a class="me-3 py-2 text-dark text-decoration-none" href="/info">Info</a>
-              <a class="me-3 py-2 text-dark text-decoration-none" href="/dash">Dashboard</a>
-          </nav>
-      </div>
-    </header>
-    <!-- 최저가 상품 -->
-    <div class="p-4 mb-4 bg-light rounded-3 "> 
-      <div class="container-fluid">
-          <h4>{{c_min_dict[0]}} {{c_min_dict[1]}} - {{c_min_dict[2]}} {{c_min_dict[3]}}({{c_min_dict[9]}}) 일정의 렌트카 최저가 상품입니다</h4>
-      </div>
-    </div>
-    
-    <!-- c_min_dict의 key [0 - rent_date, 1 - rent_day, 2 - return_date, 3 - return_day, 4 - car_name, 5 - oiltype, 6 - num_seat, 7 - price, 8 - reserve_avail, 9 - rent_period, 10 - img_url] -->
-    <div class="h-100 p-5 tbg-light border rounded-3">
-      <div class="col-md-12 mb-6">
-        <div class="row align-items-center">
-          <div class="col-md-6">
-            <img src="{{c_min_dict[10][0]}}" width="400" height="300" style="margin-left: 70px;">
-            <p style="margin-left: 70pt;"><strong><span style="font-size: 1.2em;">{{c_min_dict[5][0]}} | {{c_min_dict[6][0]}}인승</span></strong></p>
-          </div>
-          <div class="col-md-6">
-            <h2 class="text-center"><strong><span style="font-size: 1.5em;">{{c_min_dict[4][0]}}<br><br><span style="color: red;">{{c_min_dict[7][0]}}원</span></span></strong></h2>
-            <div>
+</head>
+
+<body>
+
+    <main>
+        <div class="container py-4">
+            <!--헤더 구성-->
+            <header>
+                <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+                    <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" class="me-2" viewBox="0 0 118 94" role="img">
+                            <title>Bootstrap</title>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z" fill="currentColor"></path>
+                        </svg>
+                        <span class="fs-4">제주도 경비 예측</span>
+                    </a>
+
+                    <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+                        <a class="me-3 py-2 text-dark text-decoration-none" href="/">Home</a>
+                        <a class="me-3 py-2 text-dark text-decoration-none" href="/info">Info</a>
+                        <a class="me-3 py-2 text-dark text-decoration-none" href="/dash">Dashboard</a>
+                    </nav>
+                </div>
+            </header>
+            <!-- 최저가 상품 -->
+            <div class="p-4 mb-4 bg-light rounded-3 ">
+                <div class="container-fluid">
+                    <h4>{{c_min_dict[0]}} {{c_min_dict[1]}} - {{c_min_dict[2]}} {{c_min_dict[3]}}({{c_min_dict[9]}}) 일정의 렌트카 최저가 상품입니다</h4>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <br></br>
-    <div class="p-4 mb-4 bg-light rounded-3 "> 
-      <div class="container-fluid">
-          <h4>최저가와 유사한 {{show_num}}개의 상품들을 살펴보세요</h4>
-      </div>
-    </div>
-    
-
-    {% for i in range(1, 5, 2) %}
-    <div class="row align-items-md-stretch">
-        <div class="col-md-6 mb-6">
-            <div class="h-100 p-5 tbg-light border rounded-3">
-                <div class="row">
-                    <div class="col-md-6">
-                        <img src="{{c_min_dict[10][i]}}" width="300" height="225" style="object-fit: cover; object-position: left;">
-                        <p><strong><span style="font-size: 1.1em;">{{c_min_dict[5][i]}} | {{c_min_dict[6][i]}}인승</span></strong></p>
+            <!--<a href="https://www.lotterentacar.net/hp/kor/reservation/index.do?state=2&rentArea=6&mnCd=T2FN010101#" class="btn btn-primary" target="_blank">예약하기</a>-->
+            <!-- c_min_dict의 key [0 - rent_date, 1 - rent_day, 2 - return_date, 3 - return_day, 4 - car_name, 5 - oiltype, 6 - num_seat, 7 - price, 8 - reserve_avail, 9 - rent_period, 10 - img_url] -->
+            <div class="row align-items-md-stretch">
+                <div class="col-md-6 mb-6">
+                    <div class="h-100 p-5 tbg-light border rounded-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="{{c_min_dict[10][0]}}" width="300" height="225" style="object-fit: cover; object-position: left;">
+                                <p><strong><span style="font-size: 1.1em;">{{c_min_dict[5][0]}} | {{c_min_dict[6][0]}}인승</span></strong></p>
+                            </div>
+                            <div class="col-md-6">
+                                <h2 class="text-center"><strong><span style="font-size: 1.3em;">{{c_min_dict[4][0]}}<br><br><span style="color: red;">{{c_min_dict[7][0]}}원</span></span></strong></h2>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                      <h2 class="text-center"><strong><span style="font-size: 1.3em;">{{c_min_dict[4][i]}}<br><br><span style="color: red;">{{c_min_dict[7][i]}}원</span></span></strong></h2>
+                </div>
+                <div class="col-md-6 mb-6">
+                  <div class="h-100 p-5 tbg-light border rounded-3 white-border">
+                        <div class="row">
+                            <div class="col-md-6">
+                              <a href="https://www.lotterentacar.net/hp/kor/reservation/index.do?state=2&rentArea=6&mnCd=T2FN010101#" class="btn btn-primary" 
+                              target="_blank" style="width: 542px; height: 241.359px; display: flex; align-items: center; justify-content: center;">예약하기</a>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6 mb-6">
-            <div class="h-100 p-5 tbg-light border rounded-3">
-                <div class="row">
-                    <div class="col-md-6">
-                        <img src="{{c_min_dict[10][i+1]}}" width="300" height="225" style="object-fit: cover; object-position: left;">
-                        <p><strong><span style="font-size: 1.1em;">{{c_min_dict[5][i+1]}} | {{c_min_dict[6][i+1]}}인승</span></strong></p>
+
+            <br></br>
+            <div class="p-4 mb-4 bg-light rounded-3 ">
+                <div class="container-fluid">
+                    <h4>최저가와 유사한 {{show_num}}개의 상품들을 살펴보세요</h4>
+                </div>
+            </div>
+
+
+            {% for i in range(1, 5, 2) %}
+            <div class="row align-items-md-stretch">
+                <div class="col-md-6 mb-6">
+                    <div class="h-100 p-5 tbg-light border rounded-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="{{c_min_dict[10][i]}}" width="300" height="225" style="object-fit: cover; object-position: left;">
+                                <p><strong><span style="font-size: 1.1em;">{{c_min_dict[5][i]}} | {{c_min_dict[6][i]}}인승</span></strong></p>
+                            </div>
+                            <div class="col-md-6">
+                                <h2 class="text-center"><strong><span style="font-size: 1.3em;">{{c_min_dict[4][i]}}<br><br><span style="color: red;">{{c_min_dict[7][i]}}원</span></span></strong></h2>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                      <h2 class="text-center"><strong><span style="font-size: 1.3em;">{{c_min_dict[4][i+1]}}<br><br><span style="color: red;">{{c_min_dict[7][i+1]}}원</span></span></strong></h2>
+                </div>
+                <div class="col-md-6 mb-6">
+                    <div class="h-100 p-5 tbg-light border rounded-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="{{c_min_dict[10][i+1]}}" width="300" height="225" style="object-fit: cover; object-position: left;">
+                                <p><strong><span style="font-size: 1.1em;">{{c_min_dict[5][i+1]}} | {{c_min_dict[6][i+1]}}인승</span></strong></p>
+                            </div>
+                            <div class="col-md-6">
+                                <h2 class="text-center"><strong><span style="font-size: 1.3em;">{{c_min_dict[4][i+1]}}<br><br><span style="color: red;">{{c_min_dict[7][i+1]}}원</span></span></strong></h2>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
+            <!--<img src="{{c_min_dict[10][i]}}" width="400" height="300">-->
+
+
+            <!--페이지 하단 부분-->
+            <footer class="pt-3 mt-4 text-muted border-top">
+                <div class="row">
+                    <div class="col-12 col-md">
+                        <small class="d-block mb-3 text-muted">&copy; I4J4 2023</small>
+                    </div>
+                </div>
+            </footer>
         </div>
-    </div>
-    {% endfor %}
-    <!--<img src="{{c_min_dict[10][i]}}" width="400" height="300">-->
-
-
-    <!--페이지 하단 부분-->
-        <footer class="pt-3 mt-4 text-muted border-top">
-            <div class="row">
-            <div class="col-12 col-md">
-                <small class="d-block mb-3 text-muted">&copy; I4J4 2023</small>
-            </div>
-            </div>
-        </footer>
-  </div>
-</main>
+    </main>
 
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-    
-  </body>
+
+</body>
+
 </html>

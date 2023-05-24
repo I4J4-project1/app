@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, 그리고 Bootstrap 기여자들">
     <meta name="generator" content="Hugo 0.104.2">
-    <title>중간가 렌터카 추천</title>
+    <title>평균가 렌터카 추천</title>
 
     <link rel="canonical" href="https://getbootstrap.kr/docs/5.2/examples/jumbotron/">
 
@@ -123,23 +123,23 @@
           </nav>
       </div>
     </header>
-    <!-- 중간가 상품 -->
+    <!-- 평균가 상품 -->
     <div class="p-4 mb-4 bg-light rounded-3 "> 
       <div class="container-fluid">
-          <h4>{{c_med_dict[0]}} {{c_med_dict[1]}} - {{c_med_dict[2]}} {{c_med_dict[3]}}({{c_med_dict[9]}}) 일정의 렌트카 중간가 상품입니다</h4>
+          <h4>{{c_avg_dict[0]}} {{c_avg_dict[1]}} - {{c_avg_dict[2]}} {{c_avg_dict[3]}}({{c_avg_dict[9]}}) 일정의 렌트카 평균가 상품입니다</h4>
       </div>
     </div>
     
-    <!-- c_med_dict의 key [0 - rent_date, 1 - rent_day, 2 - return_date, 3 - return_day, 4 - car_name, 5 - oiltype, 6 - num_seat, 7 - price, 8 - reserve_avail, 9 - rent_period, 10 - img_url] -->
+    <!-- c_avg_dict의 key [0 - rent_date, 1 - rent_day, 2 - return_date, 3 - return_day, 4 - car_name, 5 - oiltype, 6 - num_seat, 7 - price, 8 - reserve_avail, 9 - rent_period, 10 - img_url] -->
     <div class="h-100 p-5 tbg-light border rounded-3">
       <div class="col-md-12 mb-6">
         <div class="row align-items-center">
           <div class="col-md-6">
-            <img src="{{c_med_dict[10][2]}}" width="400" height="300" style="margin-left: 70px;">
-            <p style="margin-left: 70pt;"><strong><span style="font-size: 1.2em;">{{c_med_dict[5][2]}} | {{c_med_dict[6][2]}}인승</span></strong></p>
+            <img src="{{c_avg_dict[10][0]}}" width="400" height="300" style="margin-left: 70px;">
+            <p style="margin-left: 70pt;"><strong><span style="font-size: 1.2em;">{{c_avg_dict[5][0]}} | {{c_avg_dict[6][0]}}인승</span></strong></p>
           </div>
           <div class="col-md-6">
-            <h2 class="text-center"><strong><span style="font-size: 1.5em;">{{c_med_dict[4][2]}}<br><br><span style="color: red;">{{c_med_dict[7][2]}}원</span></span></strong></h2>
+            <h2 class="text-center"><strong><span style="font-size: 1.5em;">{{c_avg_dict[4][0]}}<br><br><span style="color: red;">{{c_avg_dict[7][0]}}원</span></span></strong></h2>
             <div>
             </div>
           </div>
@@ -149,22 +149,22 @@
     <br></br>
     <div class="p-4 mb-4 bg-light rounded-3 "> 
       <div class="container-fluid">
-          <h4>중간가와 유사한 {{show_num}}개의 상품들을 살펴보세요</h4>
+          <h4>평균가와 유사한 {{show_num}}개의 상품들을 살펴보세요</h4>
       </div>
     </div>
     
 
-
+    {% for i in range(1, 5, 2) %}
     <div class="row align-items-md-stretch">
         <div class="col-md-6 mb-6">
             <div class="h-100 p-5 tbg-light border rounded-3">
                 <div class="row">
                     <div class="col-md-6">
-                        <img src="{{c_med_dict[10][0]}}" width="300" height="225" style="object-fit: cover; object-position: left;">
-                        <p><strong><span style="font-size: 1.1em;">{{c_med_dict[5][0]}} | {{c_med_dict[6][0]}}인승</span></strong></p>
+                        <img src="{{c_avg_dict[10][i]}}" width="300" height="225" style="object-fit: cover; object-position: left;">
+                        <p><strong><span style="font-size: 1.1em;">{{c_avg_dict[5][i]}} | {{c_avg_dict[6][i]}}인승</span></strong></p>
                     </div>
                     <div class="col-md-6">
-                      <h2 class="text-center"><strong><span style="font-size: 1.3em;">{{c_med_dict[4][0]}}<br><br><span style="color: red;">{{c_med_dict[7][0]}}원</span></span></strong></h2>
+                      <h2 class="text-center"><strong><span style="font-size: 1.3em;">{{c_avg_dict[4][i]}}<br><br><span style="color: red;">{{c_avg_dict[7][i]}}원</span></span></strong></h2>
                     </div>
                 </div>
             </div>
@@ -173,47 +173,18 @@
             <div class="h-100 p-5 tbg-light border rounded-3">
                 <div class="row">
                     <div class="col-md-6">
-                        <img src="{{c_med_dict[10][1]}}" width="300" height="225" style="object-fit: cover; object-position: left;">
-                        <p><strong><span style="font-size: 1.1em;">{{c_med_dict[5][1]}} | {{c_med_dict[6][1]}}인승</span></strong></p>
+                        <img src="{{c_avg_dict[10][i+1]}}" width="300" height="225" style="object-fit: cover; object-position: left;">
+                        <p><strong><span style="font-size: 1.1em;">{{c_avg_dict[5][i+1]}} | {{c_avg_dict[6][i+1]}}인승</span></strong></p>
                     </div>
                     <div class="col-md-6">
-                      <h2 class="text-center"><strong><span style="font-size: 1.3em;">{{c_med_dict[4][1]}}<br><br><span style="color: red;">{{c_med_dict[7][1]}}원</span></span></strong></h2>
+                      <h2 class="text-center"><strong><span style="font-size: 1.3em;">{{c_avg_dict[4][i+1]}}<br><br><span style="color: red;">{{c_avg_dict[7][i+1]}}원</span></span></strong></h2>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="row align-items-md-stretch">
-      <div class="col-md-6 mb-6">
-          <div class="h-100 p-5 tbg-light border rounded-3">
-              <div class="row">
-                  <div class="col-md-6">
-                      <img src="{{c_med_dict[10][3]}}" width="300" height="225" style="object-fit: cover; object-position: left;">
-                      <p><strong><span style="font-size: 1.1em;">{{c_med_dict[5][3]}} | {{c_med_dict[6][3]}}인승</span></strong></p>
-                  </div>
-                  <div class="col-md-6">
-                    <h2 class="text-center"><strong><span style="font-size: 1.3em;">{{c_med_dict[4][3]}}<br><br><span style="color: red;">{{c_med_dict[7][3]}}원</span></span></strong></h2>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div class="col-md-6 mb-6">
-          <div class="h-100 p-5 tbg-light border rounded-3">
-              <div class="row">
-                  <div class="col-md-6">
-                      <img src="{{c_med_dict[10][4]}}" width="300" height="225" style="object-fit: cover; object-position: left;">
-                      <p><strong><span style="font-size: 1.1em;">{{c_med_dict[5][4]}} | {{c_med_dict[6][4]}}인승</span></strong></p>
-                  </div>
-                  <div class="col-md-6">
-                    <h2 class="text-center"><strong><span style="font-size: 1.3em;">{{c_med_dict[4][4]}}<br><br><span style="color: red;">{{c_med_dict[7][4]}}원</span></span></strong></h2>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-
-    <!--<img src="{{c_med_dict[10][i]}}" width="400" height="300">-->
+    {% endfor %}
+    <!--<img src="{{c_avg_dict[10][i]}}" width="400" height="300">-->
 
 
     <!--페이지 하단 부분-->

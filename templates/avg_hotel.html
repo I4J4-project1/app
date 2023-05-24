@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, 그리고 Bootstrap 기여자들">
     <meta name="generator" content="Hugo 0.104.2">
-    <title>중간가 호텔 추천</title>
+    <title>평균가 호텔 추천</title>
 
     <link rel="canonical" href="https://getbootstrap.kr/docs/5.2/examples/jumbotron/">
 
@@ -108,13 +108,13 @@
           </nav>
       </div>
     </header>
-    <!-- 중간가 상품 
+    <!-- 평균가 상품 
      feature 0 : checkin_date 1 : checkin_day 2 : checkout_date 3 : checkout_day
              4 : hotel_name   5 : location    6 : grade         7 : score
              8 : customer_num 9 : price      10 : stay_period-->
     <div class="p-4 mb-4 bg-light rounded-3 "> 
       <div class="container-fluid">
-          <h4>{{middle_row[0]}} {{middle_row[1]}} - {{middle_row[2]}} {{middle_row[3]}}({{middle_row[10]}}) 일정의 호텔 중간가 상품입니다</h4>
+          <h4>{{h_avg_dict[0]}} {{h_avg_dict[1]}} - {{h_avg_dict[2]}} {{h_avg_dict[3]}}({{h_avg_dict[10]}}) 일정의 호텔 평균가 상품입니다</h4>
       </div>
     </div>
     
@@ -123,11 +123,11 @@
     <div class="row align-items-md-stretch">
       <div class="col-md-12 mb-6">
         <div class="h-100 p-5 tbg-light border rounded-3">
-            <h2>{{middle_row[4]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{h_med_price}}원</h2>
+            <h2>{{h_avg_dict[4][0]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{h_avg_dict[9][0]}}원</h2>
             <div>
-                <p><br>투숙 가능 인원: {{middle_row[8]}}명 </p>
-                <p>{{middle_row[6]}}성급</p>
-                <p>평점: {{middle_row[7]}}점</p>
+                <p><br>투숙 가능 인원: {{h_avg_dict[8][0]}}명 </p>
+                <p>{{h_avg_dict[6][0]}}성급</p>
+                <p>평점: {{h_avg_dict[7][0]}}점</p>
             </div>
         </div>
       </div>
@@ -135,30 +135,30 @@
     <br></br>
     <div class="p-4 mb-4 bg-light rounded-3 "> 
       <div class="container-fluid">
-          <h4>최저가와 유사한 {{show_num}}개의 상품들을 살펴보세요</h4>
+          <h4>평균가와 유사한 {{show_num}}개의 상품들을 살펴보세요</h4>
       </div>
     </div>
     
     <!--rows-->
-    {% for i in range(0, 4, 2) %}
+    {% for i in range(1, 5, 2) %}
     <div class="row align-items-md-stretch">
         <div class="col-md-6 mb-6">
             <div class="h-100 p-5 tbg-light border rounded-3">
-                <h2>{{ h_med_dict[4][i] }}<br><br>{{h_med_dict[9][i]}}원</h2>
+                <h2>{{ h_avg_dict[4][i] }}<br><br>{{h_avg_dict[9][i]}}원</h2>
                 <div>
-                    <p><br>투숙 가능 인원: {{h_med_dict[8][i]}}명 </p>
-                    <p>{{h_med_dict[6][i]}}성급</p>
-                    <p>평점: {{h_med_dict[7][i]}}점</p>
+                    <p><br>투숙 가능 인원: {{h_avg_dict[8][i]}}명 </p>
+                    <p>{{h_avg_dict[6][i]}}성급</p>
+                    <p>평점: {{h_avg_dict[7][i]}}점</p>
                 </div>
             </div>
         </div>
         <div class="col-md-6 mb-6">
             <div class="h-100 p-5 tbg-light border rounded-3">
-                <h2>{{ h_med_dict[4][i+1] }}<br><br>{{h_med_dict[9][i+1]}}원</h2>
+                <h2>{{ h_avg_dict[4][i+1] }}<br><br>{{h_avg_dict[9][i+1]}}원</h2>
                 <div>
-                    <p><br>투숙 가능 인원: {{h_med_dict[8][i+1]}}명 </p>
-                    <p>{{h_med_dict[6][i+1]}}성급</p>
-                    <p>평점: {{h_med_dict[7][i+1]}}점</p>
+                    <p><br>투숙 가능 인원: {{h_avg_dict[8][i+1]}}명 </p>
+                    <p>{{h_avg_dict[6][i+1]}}성급</p>
+                    <p>평점: {{h_avg_dict[7][i+1]}}점</p>
                 </div>
             </div>
         </div>
